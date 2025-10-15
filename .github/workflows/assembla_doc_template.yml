@@ -30,10 +30,17 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Extract metadata & concatenate markdown
-      run: python3 .github/scripts/build-tesina.py
+      run: |
+        rm -f README.md *.pdf        
+        python3 .github/scripts/build-tesina.py
 
     - name: Build PDF with Pandoc
       run: |
+        TITLE=$(sed -n '/^---$/,/^---$/p' README.md | grep '^title:' | head -n1 | sed 's/title:[[:space:]]*//; s/^ *//; s/ *$//; s/[*]//g')
+        SAFE_TITLE=$(echo "$TITLE" | tr ' ' '_' | tr -cd '[:alnum:]_')
+        TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+        #PDF_NAME="${SAFE_TITLE}-${TIMESTAMP}.pdf"
+        PDF_NAME="${SAFE_TITLE}-MEduLab-${TIMESTAMP}.pdf"
         pandoc README.md \
           --pdf-engine=pdflatex \
           --variable=titolo:"$TITOLO" \
@@ -44,14 +51,19 @@ jobs:
           --variable=conservatorio:"$CONSERVATORIO" \
           --variable=città:"$CITTÀ" \
           --variable=corso:"$CORSO" \
-          -o tesina.pdf
-
-    - name: Upload PDF artifact
-      uses: actions/upload-artifact@v4
+          -o "$PDF_NAME"
+        cp "${PDF_NAME}" pages_artifact/latest.pdf
+    - uses: actions/upload-artifact@v4
       with:
-        name: github-pages
-        path: tesina.pdf
+        name: progetto-completo_pdf
+        path: "${{ env.PDF_NAME }}"
         overwrite: true
+ 
+    - name: Upload artifact per Pages
+      uses: actions/upload-pages-artifact@v4
+      with:
+        path: pages_artifact
+
 
     - name: Commit del documento assemblato
       run: |
