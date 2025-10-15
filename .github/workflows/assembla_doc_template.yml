@@ -23,46 +23,11 @@ jobs:
         apk add --no-cache git python3 py3-pip pandoc
         pip install --break-system-packages pyyaml
 
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Extract metadata & concatenate markdown
-      run: python3 << 'EOF'
-import yaml
-import os
-from pathlib import Path
-
-# Extract config.yml
-with open('config.yml', 'r') as f:
-    config = yaml.safe_load(f)
-
-meta = config.get('metadata', {})
-cand = config.get('candidato', {})
-esame = config.get('esame', {})
-cons = config.get('conservatorio', {})
-
-# Write to GITHUB_ENV
-with open(os.environ['GITHUB_ENV'], 'a') as env:
-    env.write(f"TITOLO={meta.get('titolo', 'Untitled')}\n")
-    env.write(f"SOTTOTITOLO={meta.get('sottotitolo', '')}\n")
-    env.write(f"CANDIDATO={cand.get('nome', 'Candidato')}\n")
-    env.write(f"MATERIA={esame.get('materia', '')}\n")
-    env.write(f"DATA={esame.get('data', '')}\n")
-    env.write(f"CONSERVATORIO={cons.get('nome', '')}\n")
-    env.write(f"CITTÀ={cons.get('città', '')}\n")
-    env.write(f"CORSO={cons.get('corso', '')}\n")
-
-# Concatenate markdown files (ordered)
-docs_dir = Path("docs")
-files = sorted([f for f in docs_dir.glob("*.md")])
-
-with open("merged.md", "w") as out:
-    for file in files:
-        with open(file, "r") as f:
-            out.write(f.read() + "\n\n")
-
-print(f"✓ Config extracted, {len(files)} markdown files concatenated")
-EOF
+      run: python3 .github/scripts/build-tesina.py
 
     - name: Build PDF with Pandoc
       run: |
@@ -78,7 +43,7 @@ EOF
           --variable=corso:"$CORSO" \
           -o tesina.pdf
 
-    - name: Upload artifact
+    - name: Upload PDF artifact
       uses: actions/upload-artifact@v4
       with:
         name: tesina-pdf
@@ -91,4 +56,4 @@ EOF
         git config user.name "GitHub Action"
         git add tesina.pdf 2>/dev/null || true
         git diff --staged --quiet || git commit -m "Auto-build: tesina PDF [skip ci]"
-        git push
+        git push || true
