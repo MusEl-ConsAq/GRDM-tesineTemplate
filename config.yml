@@ -1,19 +1,8 @@
-# Informazioni generali progetto
-progetto:
-  titolo: "Titolo del progetto"
-  gruppo: "MEduLab"
-  sottotitolo: "gne"
-  anno_scolastico: "2025/2026"
-  tipo_scuola: "pubblica"
-# Informazioni sui maestri
-maestri:
-  - nome: "pippo"
-    ruolo: "operatore"
-    qualifica: "qualifica"
-  - nome: "franco"
-    ruolo: "operatore"
-    qualifica: " gi"
-  - nome: "ciccio"
-    ruolo: "coordinatore"
-    qualifica: "fi"
-
+candidato:
+  nome: "Tuo Nome"
+esame:
+  materia: "Tua Materia"
+  data: "Tua Data"
+metadata:
+  titolo: "Tuo Titolo"
+  sottotitolo: "Sottotitolo"
