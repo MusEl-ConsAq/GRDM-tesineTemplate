@@ -7,6 +7,7 @@ on:
       - 'docs/**'
       - 'config.yml'
       - 'styles/**'
+      - '.github/**/**'
 
 permissions:
   contents: write
