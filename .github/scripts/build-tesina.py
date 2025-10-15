@@ -58,13 +58,13 @@ def main():
         print(f"[ERROR] No .md files found in {docs_dir}!")
         return 1
     
-    with open("merged.md", "w") as out:
+    with open("README.md", "w") as out:
         for i, file in enumerate(files, 1):
             print(f"    [{i}] {file.name}")
             with open(file, "r") as f:
                 out.write(f.read() + "\n\n")
     
-    print(f"[SUCCESS] Merged {len(files)} markdown files")
+    print(f"[SUCCESS] Merged {len(files)} markdown files in readme.md")
     return 0
 
 if __name__ == "__main__":
