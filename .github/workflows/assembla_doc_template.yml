@@ -1,0 +1,97 @@
+# .github/workflows/assembla_doc_template.yml
+
+name: Assembla Documento con Template
+
+on:
+  push:
+    branches: [ main ]
+    paths: 
+      - 'docs/sezioni/**'
+      - 'config.yml'
+      - '.github/scripts/**'
+      - '.github/workflows/**'
+      - 'styles/**'
+      - '*.tex'
+      - 'customPandoc.latex'
+      
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'docs/sezioni/**'
+      - 'config.yml'
+      - '.github/scripts/**'
+      - '.github/workflows/**'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/kjarosh/latex:2025.1-small
+
+    steps:
+    - name: Install dependencies (missing LaTeX packages )
+      run: |
+        apk add --no-cache git python3 py3-pip bash pandoc tar
+        pip install --break-system-packages pyyaml python-liquid
+        tlmgr install preprint 
+        
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Processa i template con Python  e Genera il PDF con Pandoc
+      run: |
+        rm -f README.md *.pdf
+        python3 .github/scripts/process-template.py
+        TITLE=$(sed -n '/^---$/,/^---$/p' README.md | grep '^title:' | head -n1 | sed 's/title:[[:space:]]*//; s/^ *//; s/ *$//; s/[*]//g')
+        SAFE_TITLE=$(echo "$TITLE" | tr ' ' '_' | tr -cd '[:alnum:]_')
+        TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+        #PDF_NAME="${SAFE_TITLE}-${TIMESTAMP}.pdf"
+        PDF_NAME="${SAFE_TITLE}-MEduLab-${TIMESTAMP}.pdf"
+        echo "Generazione PDF: $PDF_NAME"
+        pandoc README.md -o "$PDF_NAME" \
+          --pdf-engine=pdflatex \
+          --template=styles/customPandoc.latex
+        echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
+        mkdir -p pages_artifact
+        cp "${PDF_NAME}" pages_artifact/latest.pdf
+    - uses: actions/upload-artifact@v4
+      with:
+        name: progetto-completo_pdf
+        path: "${{ env.PDF_NAME }}"
+        overwrite: true
+        
+    - name: Upload artifact per Pages
+      uses: actions/upload-pages-artifact@v4
+      with:
+        path: pages_artifact
+
+    - name: Commit del documento assemblato
+      run: |
+        cd "$GITHUB_WORKSPACE"
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        rm -f *.pdf
+        git add -u
+        git add README.md
+        git diff --staged --quiet || git commit -m "Auto-aggiornamento documento con template [skip ci]"
+        
+    - name: Push delle modifiche
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy su GitHub Pages
+        uses: actions/deploy-pages@v4

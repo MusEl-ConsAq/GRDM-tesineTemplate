@@ -1,0 +1,68 @@
+% mystyle.sty
+\ProvidesPackage{mystyle}
+
+% Margini (usa il pacchetto geometry)
+\RequirePackage[margin=2.5cm]{geometry}
+
+% Dimensione del font
+\renewcommand\normalsize{\fontsize{11}{13}\selectfont}
+
+\usepackage{styles/titlesec}
+\titleformat{\section}[block]{\normalfont\Large\bfseries\centering}{\thesection}{1em}{}
+\titleformat{\subsection}[block]{\normalfont\Large\bfseries\centering}{}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\centering}
+  {\thesubsubsection}{1em}{}
+
+\RequirePackage{authblk}
+\RequirePackage{etoolbox}
+
+% Definizione degli stili per gli autori
+\renewcommand\Authfont{\normalsize\bfseries}
+\renewcommand\Affilfont{\small\itshape}
+\setlength{\affilsep}{1em}
+
+% Aggiungi il gruppo prima degli autori
+\makeatletter
+\pretocmd{\@author}
+  {\begin{center}\large\bfseries\gruppo\end{center}\par\vspace{1em}}
+  {}{} % Argomenti per successo/fallimento (lasciare vuoti)
+\makeatother
+
+% Ridefinizione di maketitle 
+\makeatletter
+\renewcommand{\@maketitle}{%
+  \newpage
+  \null
+  \vskip 2em%
+  \begin{center}%
+    {\Huge \@title \par}%
+    \vskip 1.5em%
+    % Sottotitolo se presente
+    \@ifundefined{@subtitle}{}{{\large \@subtitle \par}\vskip 1.5em}%
+    % Gruppo se presente
+    \def\temp{\gruppo}%
+    \ifx\temp\empty\else{\large\bfseries \gruppo \par}\vskip 1.5em\fi
+    % Lista degli autori con nome, ruolo e qualifica
+    \authorlist
+    \vskip 1.5em%
+    % Data
+    {\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1.5em
+}
+
+% Comando per il sottotitolo
+\providecommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+
+% ========================================
+% Piè di pagina con copyright
+% ========================================
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % cancella intestazioni e piè di pagina predefiniti
+\fancyfoot[C]{\small \textcopyright\ 2025 MEduLab. Tutti i diritti riservati.}
+\renewcommand{\headrulewidth}{0pt} % rimuove linea in cima
+\renewcommand{\footrulewidth}{0pt} % rimuove linea in basso
+\makeatother
