@@ -52,6 +52,8 @@ jobs:
           --variable=città:"$CITTÀ" \
           --variable=corso:"$CORSO" \
           -o "$PDF_NAME"
+        echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
+        mkdir -p pages_artifact
         cp "${PDF_NAME}" pages_artifact/latest.pdf
     - uses: actions/upload-artifact@v4
       with:
