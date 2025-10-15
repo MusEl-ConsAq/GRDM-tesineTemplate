@@ -1,32 +1,15 @@
-# .github/workflows/assembla_doc_template.yml
+# .github/workflows/build-tesina.yml
 
-name: Assembla Documento con Template
+name: Build Tesina PDF
 
 on:
   push:
     branches: [ main ]
-    paths: 
-      - 'docs/sezioni/**'
-      - 'config.yml'
-      - '.github/scripts/**'
-      - '.github/workflows/**'
-      - 'styles/**'
-      - '*.tex'
-      - 'customPandoc.latex'
-      
-  pull_request:
-    branches: [ main ]
     paths:
-      - 'docs/sezioni/**'
+      - 'docs/**'
       - 'config.yml'
-      - '.github/scripts/**'
-      - '.github/workflows/**'
+      - 'styles/**'
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,64 +17,72 @@ jobs:
       image: ghcr.io/kjarosh/latex:2025.1-small
 
     steps:
-    - name: Install dependencies (missing LaTeX packages )
+    - name: Install dependencies
       run: |
-        apk add --no-cache git python3 py3-pip bash pandoc tar
-        pip install --break-system-packages pyyaml python-liquid
-        tlmgr install preprint 
-        
-    - name: Checkout repository
+        apk add --no-cache git python3 py3-pip pandoc
+        pip install --break-system-packages pyyaml
+
+    - name: Checkout
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
 
-    - name: Processa i template con Python  e Genera il PDF con Pandoc
+    - name: Extract metadata from config.yml
+      id: metadata
       run: |
-        rm -f README.md *.pdf
-        python3 .github/scripts/process-template.py
-        TITLE=$(sed -n '/^---$/,/^---$/p' README.md | grep '^title:' | head -n1 | sed 's/title:[[:space:]]*//; s/^ *//; s/ *$//; s/[*]//g')
-        SAFE_TITLE=$(echo "$TITLE" | tr ' ' '_' | tr -cd '[:alnum:]_')
-        TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-        #PDF_NAME="${SAFE_TITLE}-${TIMESTAMP}.pdf"
-        PDF_NAME="${SAFE_TITLE}-MEduLab-${TIMESTAMP}.pdf"
-        echo "Generazione PDF: $PDF_NAME"
-        pandoc README.md -o "$PDF_NAME" \
+        python3 << 'EOF'
+import yaml
+import os
+
+with open('config.yml', 'r') as f:
+    config = yaml.safe_load(f)
+
+# Estrarre nested values
+meta = config.get('metadata', {})
+cand = config.get('candidato', {})
+esame = config.get('esame', {})
+cons = config.get('conservatorio', {})
+
+# Scrivere in GITHUB_ENV per usarle nei passi successivi
+with open(os.environ['GITHUB_ENV'], 'a') as env:
+    env.write(f"TITOLO={meta.get('titolo', 'Untitled')}\n")
+    env.write(f"SOTTOTITOLO={meta.get('sottotitolo', '')}\n")
+    env.write(f"CANDIDATO={cand.get('nome', 'Candidato')}\n")
+    env.write(f"MATERIA={esame.get('materia', '')}\n")
+    env.write(f"DATA={esame.get('data', '')}\n")
+    env.write(f"CONSERVATORIO={cons.get('nome', '')}\n")
+    env.write(f"CITTÀ={cons.get('città', '')}\n")
+    env.write(f"CORSO={cons.get('corso', '')}\n")
+EOF
+
+    - name: Concatenate markdown files (in order)
+      run: |
+        cat docs/*.md > merged.md
+
+    - name: Build PDF with Pandoc
+      run: |
+        pandoc merged.md \
+          --template=styles/tesina-pandoc.latex \
           --pdf-engine=pdflatex \
-          --template=styles/customPandoc.latex
-        echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
-        mkdir -p pages_artifact
-        cp "${PDF_NAME}" pages_artifact/latest.pdf
-    - uses: actions/upload-artifact@v4
-      with:
-        name: progetto-completo_pdf
-        path: "${{ env.PDF_NAME }}"
-        overwrite: true
-        
-    - name: Upload artifact per Pages
-      uses: actions/upload-pages-artifact@v4
-      with:
-        path: pages_artifact
+          --variable=titolo:"$TITOLO" \
+          --variable=sottotitolo:"$SOTTOTITOLO" \
+          --variable=candidato:"$CANDIDATO" \
+          --variable=materia:"$MATERIA" \
+          --variable=data:"$DATA" \
+          --variable=conservatorio:"$CONSERVATORIO" \
+          --variable=città:"$CITTÀ" \
+          --variable=corso:"$CORSO" \
+          -o tesina.pdf
 
-    - name: Commit del documento assemblato
-      run: |
-        cd "$GITHUB_WORKSPACE"
-        git config --global --add safe.directory "$GITHUB_WORKSPACE"
-        git config --global user.email "action@github.com"
-        git config --global user.name "GitHub Action"
-        rm -f *.pdf
-        git add -u
-        git add README.md
-        git diff --staged --quiet || git commit -m "Auto-aggiornamento documento con template [skip ci]"
-        
-    - name: Push delle modifiche
-      uses: ad-m/github-push-action@master
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
-        
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy su GitHub Pages
-        uses: actions/deploy-pages@v4
+        name: tesina-pdf
+        path: tesina.pdf
+        overwrite: true
+
+    - name: Commit & Push PDF
+      run: |
+        git config user.email "action@github.com"
+        git config user.name "GitHub Action"
+        git add tesina.pdf 2>/dev/null || true
+        git diff --staged --quiet || git commit -m "Auto-build: tesina PDF"
+        git push
