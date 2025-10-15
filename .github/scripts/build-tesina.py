@@ -46,7 +46,7 @@ def main():
     # 3. CONCATENATE markdown files (ordered)
     # ==========================================
     print("[*] Concatenating markdown files...")
-    docs_dir = Path("docs")
+    docs_dir = Path("docs/sezioni")
     
     if not docs_dir.exists():
         print(f"[ERROR] Directory {docs_dir} not found!")
