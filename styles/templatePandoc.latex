@@ -277,9 +277,7 @@ $if(title)$
   \begin{titlepage}
       \centering
       \sffamily % Usa il font sans-serif (Arial) per tutta la pagina.
-  
       \vspace*{2cm} % Spazio dall'alto
-  
       % --- Intestazione: Arial 12pt ---
       {
           \normalsize
@@ -291,11 +289,11 @@ $if(title)$
       
       % --- Titolo e Sottotitolo: Arial 14pt/12pt ---
       {
-          \Huge\bfseries % 14pt Grassetto per il titolo
+          \large\bfseries % 14pt Grassetto per il titolo
           $title$ \par
           % --- Logica per il Sottotitolo ---
           $if(subtitle)$
-            {\normalsize\itshape $subtitle$ \par} % 12pt Corsivo per il sottotitolo
+            {\large\itshape $subtitle$ \par} % 12pt Corsivo per il sottotitolo
           $endif$
       }
 
