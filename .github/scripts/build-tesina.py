@@ -82,7 +82,7 @@ def main():
         # Includi lo stile e altre opzioni di Pandoc
         out.write("header-includes:\n")
         out.write("  - \\usepackage{styles/tesina}\n")
-        out.write("documentclass: report\n") # Esempio: impostiamo la classe del documento
+        #out.write("documentclass: report\n") # Esempio: impostiamo la classe del documento
         out.write("toc: true\n") # Abilitiamo il sommario
         out.write("toc-depth: 2\n") # Impostiamo la profondità del sommario
 
