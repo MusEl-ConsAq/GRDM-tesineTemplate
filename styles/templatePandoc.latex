@@ -271,94 +271,88 @@ $endif$
 $endif$
   pdfcreator={LaTeX via pandoc}}
 
-$if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
-$endif$
-$if(subtitle)$
-$if(beamer)$
-$else$
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
-$endif$
-\subtitle{$subtitle$}
-$endif$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-\date{$date$}
-$if(beamer)$
-$if(institute)$
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
-$endif$
-$if(titlegraphic)$
-\titlegraphic{\includegraphics{$titlegraphic$}}
-$endif$
-$if(logo)$
-\logo{\includegraphics{$logo$}}
-$endif$
-$endif$
 
 \begin{document}
-$if(has-frontmatter)$
-\frontmatter
-$endif$
+
 $if(title)$
-$if(beamer)$
-\frame{\titlepage}
-$else$
-\maketitle
-$endif$
-$if(abstract)$
-\begin{abstract}
-$abstract$
-\end{abstract}
-$endif$
+  % ===================================================================
+  % FRONTESPIZIO PERSONALIZZATO (con RIASSUNTO integrato)
+  % ===================================================================
+  \begin{titlepage}
+      \centering
+      \sffamily % Usa il font sans-serif (Arial) per tutta la pagina.
+  
+      \vspace*{2cm} % Spazio dall'alto
+  
+      % --- Intestazione: Arial 12pt ---
+      {
+          \normalsize
+          $corso$ \\
+          $conservatorio$ \par
+      }
+      
+      \vspace{3cm} % Spazio tra intestazione e titolo
+      
+      % --- Titolo Principale: Arial 14pt, grassetto ---
+      {
+          \large\bfseries
+          REDAZIONE DELLE TESINE DI ESAME \par
+      }
+  
+      \vspace{1.5cm} % Spazio tra titolo e autore
+  
+      % --- Dati Candidato: Arial 12pt ---
+      {
+          \normalsize
+          di $author$ \par
+      }
+  
+      % \vfill spinge i blocchi successivi verso il basso, creando lo spazio principale
+      \vfill 
+      % --- Dati Esame: Arial 12pt ---
+      {
+          \normalsize
+          esame di $esame$ \\
+          data \dotfill \hspace{0.5cm} $date$ \par
+      }
+      \vspace{2cm}
+      % --- RIASSUNTO (Abstract) ---
+      % Viene posizionato qui, prima della fine della pagina.
+      % Usiamo un minipage per controllarne la larghezza e l'allineamento.
+      $if(abstract)$
+      \begin{minipage}{0.9\textwidth} % Crea un box largo il 90% della pagina
+          \centering\large\bfseries RIASSUNTO \par % Titolo del riassunto
+          \vspace{0.5cm}
+          \normalsize\raggedright % Testo del riassunto in 12pt, allineato a sinistra
+          $abstract$
+      \end{minipage}
+      $endif$
+      \vspace*{1cm} % Spazio prima del fondo pagina
+  \end{titlepage}
 $endif$
 
 $for(include-before)$
-$include-before$
-
+  $include-before$
 $endfor$
+
+
 $if(toc)$
-$if(toc-title)$
-\renewcommand*\contentsname{$toc-title$}
+  $if(toc-title)$
+    \renewcommand*\contentsname{$toc-title$}
+  $endif$
 $endif$
-$if(beamer)$
-\begin{frame}[allowframebreaks]
-$if(toc-title)$
-  \frametitle{$toc-title$}
-$endif$
-  \tableofcontents[hideallsubsections]
-\end{frame}
-$else$
-{
-$if(colorlinks)$
-\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
-$endif$
-\setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
-}
-$endif$
-$endif$
+
+
 $if(lof)$
 \listoffigures
 $endif$
+
 $if(lot)$
 \listoftables
 $endif$
-$if(linestretch)$
-\setstretch{$linestretch$}
-$endif$
-$if(has-frontmatter)$
-\mainmatter
-$endif$
+
 $body$
 
-$if(has-frontmatter)$
-\backmatter
-$endif$
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
