@@ -284,27 +284,22 @@ $if(title)$
           Corsi Accademici di $corso$ \\
           $conservatorio$ \par
       }
-      
       \vspace{3cm} % Spazio tra intestazione e titolo
-      
       % --- Titolo e Sottotitolo: Arial 14pt/12pt ---
       {
           \large\bfseries % 14pt Grassetto per il titolo
           $title$ \par
           % --- Logica per il Sottotitolo ---
           $if(subtitle)$
-            {\large\itshape $subtitle$ \par} % 12pt Corsivo per il sottotitolo
+            {\normalsize\itshape $subtitle$ \par} % 12pt Corsivo per il sottotitolo
           $endif$
       }
-
       \vspace{.5cm} % Spazio tra titolo e autore
-  
       % --- Dati Candidato: Arial 12pt ---
       {
           \normalsize
           di $author$ \par
       }
-  
       \vspace{.5cm}
       % --- Dati Esame: Arial 12pt ---
       {
