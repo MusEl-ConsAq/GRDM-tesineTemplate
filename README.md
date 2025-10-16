@@ -8,7 +8,6 @@ corso: "Musica Elettronica DCPL34"
 esame: "Sintesi e Campionamento"
 header-includes:
   - \usepackage{styles/tesina}
-documentclass: report
 toc: true
 toc-depth: 2
 ---
