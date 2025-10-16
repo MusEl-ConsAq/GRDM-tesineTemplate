@@ -42,7 +42,7 @@ jobs:
         #PDF_NAME="${SAFE_TITLE}-${TIMESTAMP}.pdf"
         PDF_NAME="${SAFE_TITLE}-CONSAQ-${TIMESTAMP}.pdf"
         pandoc README.md \
-          --pdf-engine=pdflatex \
+          --pdf-engine=xelatex \
           --variable=titolo:"$TITOLO" \
           --variable=sottotitolo:"$SOTTOTITOLO" \
           --variable=candidato:"$CANDIDATO" \
