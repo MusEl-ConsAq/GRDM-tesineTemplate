@@ -313,9 +313,9 @@ $if(title)$
       {
           \normalsize
           esame di $esame$ \\
-          data \dotfill \hspace{0.5cm} $date$ \par
+          $date$ \par
       }
-      \vspace{2cm}
+      \vspace{.5cm}
       % --- RIASSUNTO (Abstract) ---
       % Viene posizionato qui, prima della fine della pagina.
       % Usiamo un minipage per controllarne la larghezza e l'allineamento.
