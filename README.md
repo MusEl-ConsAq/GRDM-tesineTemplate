@@ -6,8 +6,11 @@ date: "15/07/2025"
 conservatorio: "Conservatorio A. Casella, L'Aquila"
 corso: "Musica Elettronica DCPL34"
 esame: "Sintesi e Campionamento"
+abstract: |
+  File RIASSUNTO.md non trovato.
 header-includes:
   - \usepackage{styles/tesina}
+documentclass: report
 toc: true
 toc-depth: 2
 ---
