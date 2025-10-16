@@ -1,69 +1,61 @@
 #!/usr/bin/env python3
 """
 build-tesina.py
-Estrae metadati da config.yml e concatena markdown files ordinati
+Estrae metadati da config.yml, legge il riassunto da un file dedicato,
+e concatena i file markdown delle sezioni in un unico README.md.
 """
 import yaml
-import os
 from pathlib import Path
+
 def main():
     # ==========================================
-    # 1. EXTRACT config.yml
+    # 1. LEGGI CONFIG.YML
     # ==========================================
     print("[*] Reading config.yml...")
-    with open('config.yml', 'r') as f:
+    with open('config.yml', 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
     
-    meta = config.get('metadata', {})
-    cand = config.get('candidato', {})
-    esame = config.get('esame', {})
-    cons = config.get('conservatorio', {})
-    
+    # Estraiamo l'intero blocco 'tesina' per pulizia
+    tesina_data = config.get('tesina', {})
+
     # ==========================================
-    # 2. WRITE to GITHUB_ENV (for workflow access)
+    # 2. LEGGI IL RIASSUNTO (ABSTRACT) DA FILE
     # ==========================================
-    print("[*] Exporting variables to GITHUB_ENV...")
-    env_file = os.environ.get('GITHUB_ENV', '.env')
-    
-    with open(env_file, 'a') as env:
-        env.write(f"TITOLO={meta.get('titolo', 'Untitled')}\n")
-        env.write(f"SOTTOTITOLO={meta.get('sottotitolo', '')}\n")
-        env.write(f"CANDIDATO={cand.get('nome', 'Candidato')}\n")
-        env.write(f"MATERIA={esame.get('materia', '')}\n")
-        env.write(f"DATA={esame.get('data', '')}\n")
-        env.write(f"CONSERVATORIO={cons.get('nome', '')}\n")
-        env.write(f"CITTÀ={cons.get('città', '')}\n")
-        env.write(f"CORSO={cons.get('corso', '')}\n")
-    
-    print(f"    [OK] TITOLO: {meta.get('titolo', 'N/A')}")
-    print(f"    [OK] CANDIDATO: {cand.get('nome', 'N/A')}")
-    print(f"    [OK] MATERIA: {esame.get('materia', 'N/A')}")
-    print(f"    [OK] DATA: {esame.get('data', 'N/A')}")
-    
-    # ==========================================
-    # 3. CONCATENATE markdown files (ordered)
-    # ==========================================
-    print("[*] Concatenating markdown files...")
+    print("[*] Reading abstract from RIASSUNTO.md...")
     docs_dir = Path("docs/sezioni")
-    
+    riassunto_file = docs_dir / "RIASSUNTO.md"
+    abstract_content = ""
+
+    if riassunto_file.exists():
+        content = riassunto_file.read_text(encoding='utf-8').strip()
+        if content:
+            abstract_content = content
+            print("    [OK] Abstract loaded from file.")
+        else:
+            abstract_content = "Riassunto ancora non compilato."
+            print("    [WARN] RIASSUNTO.md is empty. Using default text.")
+    else:
+        abstract_content = "File RIASSUNTO.md non trovato."
+        print(f"    [WARN] {riassunto_file} not found. Using default text.")
+
+    # ==========================================
+    # 3. TROVA E ORDINA I FILE DELLE SEZIONI
+    # ==========================================
+    print("[*] Finding and sorting markdown section files...")
     if not docs_dir.exists():
         print(f"[ERROR] Directory {docs_dir} not found!")
         return 1
     
-    files = sorted([f for f in docs_dir.glob("*.md")])
+    # Escludiamo RIASSUNTO.md dal corpo principale della tesina
+    files = sorted([f for f in docs_dir.glob("*.md") if f.name != "RIASSUNTO.md"])
     
     if not files:
-        print(f"[ERROR] No .md files found in {docs_dir}!")
-        return 1
+        print(f"[WARN] No section .md files found in {docs_dir} (excluding RIASSUNTO.md).")
     
     # ==========================================
-    # 4. CREATE README with COMPLETE frontmatter
+    # 4. CREA README.MD CON FRONTMATTER E CONTENUTI
     # ==========================================
     print("[*] Creating README.md with full frontmatter...")
-
-    # Recuperiamo i dati da config (assumendo la nuova struttura)
-    tesina_data = config.get('tesina', {})
-
     with open("README.md", "w", encoding='utf-8') as out:
         # --- Scrivi il frontmatter YAML completo ---
         out.write("---\n")
@@ -79,25 +71,28 @@ def main():
         out.write(f"corso: \"{tesina_data.get('corso', '')}\"\n")
         out.write(f"esame: \"{tesina_data.get('esame', '')}\"\n")
 
+        # Inseriamo il contenuto del riassunto (abstract)
+        out.write("abstract: |\n")
+        for line in abstract_content.split('\n'):
+            out.write(f"  {line}\n")
+
         # Includi lo stile e altre opzioni di Pandoc
         out.write("header-includes:\n")
         out.write("  - \\usepackage{styles/tesina}\n")
-        #out.write("documentclass: report\n") # Esempio: impostiamo la classe del documento
-        out.write("toc: true\n") # Abilitiamo il sommario
-        out.write("toc-depth: 2\n") # Impostiamo la profondità del sommario
+        out.write("documentclass: report\n") # Usiamo 'report' per una struttura migliore
+        out.write("toc: true\n")
+        out.write("toc-depth: 2\n")
 
         out.write("---\n\n")
         
-        # --- Concatena i file markdown ---
+        # --- Concatena i file markdown delle sezioni ---
+        print("[*] Concatenating markdown files...")
         for i, file in enumerate(files, 1):
             print(f"    [{i}] {file.name}")
-            with open(file, "r", encoding='utf-8') as f:
-                out.write(f.read() + "\n\n")
+            out.write(file.read_text(encoding='utf-8') + "\n\n")
     
-    print(f"[SUCCESS] Merged {len(files)} markdown files in README.md")
+    print(f"[SUCCESS] Merged {len(files)} section files into README.md")
     return 0
-
-  
 
 if __name__ == "__main__":
     exit(main())
