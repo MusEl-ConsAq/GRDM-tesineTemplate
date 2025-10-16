@@ -57,25 +57,47 @@ def main():
         return 1
     
     # ==========================================
-    # 4. CREATE README with frontmatter
+    # 4. CREATE README with COMPLETE frontmatter
     # ==========================================
-    with open("README.md", "w") as out:
-        # Scrivi il frontmatter YAML
+    print("[*] Creating README.md with full frontmatter...")
+
+    # Recuperiamo i dati da config (assumendo la nuova struttura)
+    tesina_data = config.get('tesina', {})
+
+    with open("README.md", "w", encoding='utf-8') as out:
+        # --- Scrivi il frontmatter YAML completo ---
         out.write("---\n")
-        #out.write(f"title: {meta.get('titolo', 'Untitled')}\n")
-        #out.write(f"subtitle: {meta.get('sottotitolo', '')}\n")
+        
+        # Variabili standard di Pandoc
+        out.write(f"title: \"{tesina_data.get('titolo', 'Senza Titolo')}\"\n")
+        out.write(f"subtitle: \"{tesina_data.get('sottotitolo', '')}\"\n")
+        out.write(f"author: \"{tesina_data.get('autore', 'Autore Sconosciuto')}\"\n")
+        out.write(f"date: \"{tesina_data.get('data', '')}\"\n")
+        
+        # Le nostre variabili personalizzate per il template
+        out.write(f"conservatorio: \"{tesina_data.get('conservatorio', '')}, {tesina_data.get('citta', '')}\"\n")
+        out.write(f"corso: \"{tesina_data.get('corso', '')}\"\n")
+        out.write(f"esame: \"{tesina_data.get('esame', '')}\"\n")
+
+        # Includi lo stile e altre opzioni di Pandoc
         out.write("header-includes:\n")
         out.write("  - \\usepackage{styles/tesina}\n")
+        out.write("documentclass: report\n") # Esempio: impostiamo la classe del documento
+        out.write("toc: true\n") # Abilitiamo il sommario
+        out.write("toc-depth: 2\n") # Impostiamo la profondità del sommario
+
         out.write("---\n\n")
         
-        # Concatena i file markdown
+        # --- Concatena i file markdown ---
         for i, file in enumerate(files, 1):
             print(f"    [{i}] {file.name}")
-            with open(file, "r") as f:
+            with open(file, "r", encoding='utf-8') as f:
                 out.write(f.read() + "\n\n")
     
     print(f"[SUCCESS] Merged {len(files)} markdown files in README.md")
     return 0
+
+  
 
 if __name__ == "__main__":
     exit(main())
