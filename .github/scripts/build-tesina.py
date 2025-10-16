@@ -3,11 +3,9 @@
 build-tesina.py
 Estrae metadati da config.yml e concatena markdown files ordinati
 """
-
 import yaml
 import os
 from pathlib import Path
-
 def main():
     # ==========================================
     # 1. EXTRACT config.yml
@@ -58,13 +56,25 @@ def main():
         print(f"[ERROR] No .md files found in {docs_dir}!")
         return 1
     
+    # ==========================================
+    # 4. CREATE README with frontmatter
+    # ==========================================
     with open("README.md", "w") as out:
+        # Scrivi il frontmatter YAML
+        out.write("---\n")
+        #out.write(f"title: {meta.get('titolo', 'Untitled')}\n")
+        #out.write(f"subtitle: {meta.get('sottotitolo', '')}\n")
+        out.write("header-includes:\n")
+        out.write("  - \\usepackage{styles/mystyle}\n")
+        out.write("---\n\n")
+        
+        # Concatena i file markdown
         for i, file in enumerate(files, 1):
             print(f"    [{i}] {file.name}")
             with open(file, "r") as f:
                 out.write(f.read() + "\n\n")
     
-    print(f"[SUCCESS] Merged {len(files)} markdown files in readme.md")
+    print(f"[SUCCESS] Merged {len(files)} markdown files in README.md")
     return 0
 
 if __name__ == "__main__":
