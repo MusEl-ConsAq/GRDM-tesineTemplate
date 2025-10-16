@@ -36,11 +36,11 @@ jobs:
 
     - name: Build PDF with Pandoc
       run: |
-        TITLE=$(sed -n '/^---$/,/^---$/p' README.md | grep '^title:' | head -n1 | sed 's/title:[[:space:]]*//; s/^ *//; s/ *$//; s/[*]//g')
+        TITLE=$TITOLO
         SAFE_TITLE=$(echo "$TITLE" | tr ' ' '_' | tr -cd '[:alnum:]_')
         TIMESTAMP=$(date +%Y%m%d_%H%M%S)
         #PDF_NAME="${SAFE_TITLE}-${TIMESTAMP}.pdf"
-        PDF_NAME="${SAFE_TITLE}-MEduLab-${TIMESTAMP}.pdf"
+        PDF_NAME="${SAFE_TITLE}-CONSAQ-${TIMESTAMP}.pdf"
         pandoc README.md \
           --pdf-engine=pdflatex \
           --variable=titolo:"$TITOLO" \
