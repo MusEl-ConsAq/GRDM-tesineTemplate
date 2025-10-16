@@ -289,12 +289,17 @@ $if(title)$
       
       \vspace{3cm} % Spazio tra intestazione e titolo
       
-      % --- Titolo Principale: Arial 14pt, grassetto ---
+      % --- Titolo e Sottotitolo: Arial 14pt/12pt ---
       {
-          \large\bfseries
+          \large\bfseries % 14pt Grassetto per il titolo
           $title$ \par
+          \vspace{0.5cm}
+          % --- Logica per il Sottotitolo ---
+          $if(subtitle)$
+            {\normalsize\itshape $subtitle$ \par} % 12pt Corsivo per il sottotitolo
+          $endif$
       }
-  
+
       \vspace{.5cm} % Spazio tra titolo e autore
   
       % --- Dati Candidato: Arial 12pt ---
