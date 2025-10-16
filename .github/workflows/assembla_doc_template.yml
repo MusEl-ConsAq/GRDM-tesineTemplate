@@ -50,14 +50,6 @@ jobs:
         pandoc README.md \
           --pdf-engine=xelatex \
           --template=styles/templatePandoc.latex \
-          --variable=titolo:"$TITOLO" \
-          --variable=sottotitolo:"$SOTTOTITOLO" \
-          --variable=candidato:"$CANDIDATO" \
-          --variable=materia:"$MATERIA" \
-          --variable=data:"$DATA" \
-          --variable=conservatorio:"$CONSERVATORIO" \
-          --variable=città:"$CITTÀ" \
-          --variable=corso:"$CORSO" \
           -o "$PDF_NAME"
         echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
         mkdir -p pages_artifact
