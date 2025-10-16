@@ -79,7 +79,7 @@ def main():
         # Includi lo stile e altre opzioni di Pandoc
         out.write("header-includes:\n")
         out.write("  - \\usepackage{styles/tesina}\n")
-        out.write("documentclass: report\n") # Usiamo 'report' per una struttura migliore
+        out.write("documentclass: article\n") # Usiamo 'report' per una struttura migliore
         out.write("toc: true\n")
         out.write("toc-depth: 2\n")
 
