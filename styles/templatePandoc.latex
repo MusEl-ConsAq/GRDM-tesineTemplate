@@ -291,9 +291,8 @@ $if(title)$
       
       % --- Titolo e Sottotitolo: Arial 14pt/12pt ---
       {
-          \large\bfseries % 14pt Grassetto per il titolo
+          \Huge\bfseries % 14pt Grassetto per il titolo
           $title$ \par
-          \vspace{0.5cm}
           % --- Logica per il Sottotitolo ---
           $if(subtitle)$
             {\normalsize\itshape $subtitle$ \par} % 12pt Corsivo per il sottotitolo
