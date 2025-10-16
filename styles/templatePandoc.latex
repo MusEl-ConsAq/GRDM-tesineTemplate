@@ -215,10 +215,6 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
-$if(natbib)$
-\usepackage[$natbiboptions$]{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-$endif$
 $if(biblatex)$
 \usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
 $for(bibliography)$
@@ -335,7 +331,7 @@ $for(include-before)$
   $include-before$
 $endfor$
 
-
+% questo è table of content, acronimo toc.
 $if(toc)$
   $if(toc-title)$
     \renewcommand*\contentsname{$toc-title$}
@@ -344,48 +340,17 @@ $endif$
 
 
 $if(lof)$
-\listoffigures
+  \listoffigures
 $endif$
 
 $if(lot)$
-\listoftables
+  \listoftables
 $endif$
 
 $body$
 
-$if(natbib)$
-$if(bibliography)$
-$if(biblio-title)$
-$if(has-chapters)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
-$if(beamer)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-  \bibliographytrue
-$endif$
-  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
-$if(beamer)$
-\end{frame}
-$endif$
-
-$endif$
-$endif$
 $if(biblatex)$
-$if(beamer)$
-\begin{frame}[allowframebreaks]{$biblio-title$}
-  \bibliographytrue
-  \printbibliography[heading=none]
-\end{frame}
-$else$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+  \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 $endif$
 
-$endif$
-$for(include-after)$
-$include-after$
-
-$endfor$
 \end{document}
