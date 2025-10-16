@@ -314,7 +314,7 @@ $if(title)$
       \begin{minipage}{0.9\textwidth} % Crea un box largo il 90% della pagina
           \centering\large\bfseries RIASSUNTO \par % Titolo del riassunto
           \vspace{0.5cm}
-          \normalsize\raggedright % Testo del riassunto in 12pt, allineato a sinistra
+          \normalsize\raggedright\mdseries % Testo del riassunto in 12pt, allineato a sinistra
           $abstract$
       \end{minipage}
       $endif$
