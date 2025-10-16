@@ -7,7 +7,7 @@ conservatorio: "Conservatorio A. Casella, L'Aquila"
 corso: "Musica Elettronica DCPL34"
 esame: "Sintesi e Campionamento"
 abstract: |
-  File RIASSUNTO.md non trovato.
+  questo dovrebbe essere il sommario...
 header-includes:
   - \usepackage{styles/tesina}
 documentclass: report
