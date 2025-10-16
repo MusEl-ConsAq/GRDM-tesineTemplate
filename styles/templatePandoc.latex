@@ -277,14 +277,13 @@ $if(title)$
   \begin{titlepage}
       \centering
       \sffamily % Usa il font sans-serif (Arial) per tutta la pagina.
-      \vspace*{2cm} % Spazio dall'alto
       % --- Intestazione: Arial 12pt ---
       {
           \normalsize
           Corsi Accademici di $corso$ \\
           $conservatorio$ \par
       }
-      \vspace{3cm} % Spazio tra intestazione e titolo
+      \vspace{1cm} % Spazio tra intestazione e titolo
       % --- Titolo e Sottotitolo: Arial 14pt/12pt ---
       {
           \large\bfseries % 14pt Grassetto per il titolo
