@@ -65,7 +65,7 @@ def main():
         #out.write(f"title: {meta.get('titolo', 'Untitled')}\n")
         #out.write(f"subtitle: {meta.get('sottotitolo', '')}\n")
         out.write("header-includes:\n")
-        out.write("  - \\usepackage{styles/mystyle}\n")
+        out.write("  - \\usepackage{styles/tesina}\n")
         out.write("---\n\n")
         
         # Concatena i file markdown
