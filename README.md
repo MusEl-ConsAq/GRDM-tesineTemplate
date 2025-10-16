@@ -10,7 +10,7 @@ abstract: |
   questo dovrebbe essere il sommario...
 header-includes:
   - \usepackage{styles/tesina}
-documentclass: report
+documentclass: article
 toc: true
 toc-depth: 2
 ---
