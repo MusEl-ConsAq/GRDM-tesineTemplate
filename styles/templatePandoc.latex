@@ -283,7 +283,7 @@ $if(title)$
       % --- Intestazione: Arial 12pt ---
       {
           \normalsize
-          $corso$ \\
+          Corsi Accademici di $corso$ \\
           $conservatorio$ \par
       }
       
@@ -292,10 +292,10 @@ $if(title)$
       % --- Titolo Principale: Arial 14pt, grassetto ---
       {
           \large\bfseries
-          REDAZIONE DELLE TESINE DI ESAME \par
+          $title$ \par
       }
   
-      \vspace{1.5cm} % Spazio tra titolo e autore
+      \vspace{.5cm} % Spazio tra titolo e autore
   
       % --- Dati Candidato: Arial 12pt ---
       {
@@ -303,8 +303,7 @@ $if(title)$
           di $author$ \par
       }
   
-      % \vfill spinge i blocchi successivi verso il basso, creando lo spazio principale
-      \vfill 
+      \vspace{.5cm}
       % --- Dati Esame: Arial 12pt ---
       {
           \normalsize
