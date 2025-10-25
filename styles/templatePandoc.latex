@@ -200,12 +200,47 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
+
+
 $if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+% ======================================================================
+% CONFIGURAZIONE BIBLIOGRAFIA (Conforme alle regole accademiche)
+% ======================================================================
+% - Citazioni nel testo: (Autore Anno, p.17)
+% - Bibliografia: Arial 10pt, ordinata alfabeticamente
+% - Sezioni: Bibliografia / Sitografia / Discografia
+% ======================================================================
+\usepackage[
+  backend=biber,
+  style=$if(biblio-style)$$biblio-style$$else$authoryear$endif$,
+  sorting=nyt,      % Ordina per autore, poi anno, poi titolo
+  dashed=false,     % Evita linee al posto del nome autore ripetuto
+  maxcitenames=2,   % Mostra massimo 2 autori nella citazione
+  maxbibnames=99    % Mostra tutti gli autori in bibliografia
+]{biblatex}
+
+% Risorse bibliografiche (file .bib)
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
+
+% Font Arial 10pt (come richiesto)
+\def\bibfont{\sffamily\fontsize{10pt}{12pt}\selectfont}
+
+% Comando per includere sezioni distinte
+\AtEndDocument{%
+  % --- Bibliografia principale ---
+  \printbibliography[title=Bibliografia, keyword=bib]
+  % --- Sitografia ---
+  \printbibliography[title=Sitografia, keyword=web]
+  % --- Discografia ---
+  \printbibliography[title=Discografia, keyword=disc]
+}
 $endif$
+
+
+
+
 $if(nocite-ids)$
 \nocite{$for(nocite-ids)$$it$$sep$, $endfor$}
 $endif$
