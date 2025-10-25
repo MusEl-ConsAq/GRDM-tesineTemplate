@@ -84,11 +84,11 @@ def main():
         out.write("toc-depth: 2\n")
 
         # === Configurazione bibliografia BibLaTeX ===
-        bibfile = tesina_data.get('bibliografia', 'bibliografia.bib')
         out.write("biblatex: true\n")
         out.write("biblio-style: authoryear\n")
         out.write("biblatexoptions: [backend=biber, sorting=nyt, dashed=false]\n")
-        out.write(f"bibliography:\n  - {bibfile}\n")
+        out.write(f"bibliography: docs/{tesina_data.get('bibliography', 'bibliografia.bib')}\n")
+
 
         out.write("---\n\n")
         
