@@ -16,8 +16,7 @@ toc-depth: 2
 biblatex: true
 biblio-style: authoryear
 biblatexoptions: [backend=biber, sorting=nyt, dashed=false]
-bibliography:
-  - bibliografia.bib
+bibliography: docs/bibliografia.bib
 ---
 
 
