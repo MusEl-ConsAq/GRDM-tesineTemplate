@@ -50,7 +50,6 @@ jobs:
         PDF_NAME="${SAFE_TITLE}-CONSAQ-${TIMESTAMP}.pdf"
         pandoc README.md \
           --pdf-engine=xelatex \
-          --citeproc \
           --template=styles/templatePandoc.latex \
           -o "$PDF_NAME"
         echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
