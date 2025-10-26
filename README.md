@@ -24,7 +24,7 @@ csl: styles/consAq-author-date.csl
 
 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-La sintesi digitale nella musica elettronica è stata studiata in modo approfondito ([@delduca1987]).
+La sintesi digitale nella musica elettronica è stata studiata in modo approfondito [@delduca1987].
 
 Diversi autori hanno affrontato il tema della musica elettronica ([@delduca1987]; [@bianchini2000]; [@dannenberg2003]).
 
