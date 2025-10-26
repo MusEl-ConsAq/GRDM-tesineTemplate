@@ -87,6 +87,8 @@ def main():
 
         out.write(f"bibliography: docs/{tesina_data.get('bibliography', 'bibliografia.bib')}\n")
         out.write("csl: styles/consAq-author-date.csl\n")
+        out.write(r'nocite: "@*"' + "\n")
+
         out.write("---\n\n")
         
         # --- Concatena i file markdown delle sezioni ---
