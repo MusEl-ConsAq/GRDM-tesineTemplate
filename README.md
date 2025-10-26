@@ -13,10 +13,8 @@ header-includes:
 documentclass: article
 toc: true
 toc-depth: 2
-biblatex: true
-biblio-style: authoryear
-biblatexoptions: [backend=biber, sorting=nyt, dashed=false]
 bibliography: docs/bibliografia.bib
+csl: styles/consAq-author-date.csl
 ---
 
 
