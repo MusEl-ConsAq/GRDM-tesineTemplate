@@ -23,9 +23,8 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        apk add --no-cache biber git bash tar python3 py3-pip pandoc
+        apk add --no-cache git bash tar python3 py3-pip pandoc
         pip install --break-system-packages pyyaml
-        tlmgr install biblatex 
 
     - name: Install Microsoft Core Fonts (including Arial)
       run: |
