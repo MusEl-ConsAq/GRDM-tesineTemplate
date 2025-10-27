@@ -3762,6 +3762,7 @@
       </choose>
     </group>
   </macro>
+
   <!-- Citation -->
   <macro name="citation-author-date-item">
     <group delimiter=", ">
@@ -3818,6 +3819,8 @@
       </choose>
     </group>
   </macro>
+
+
   <citation after-collapse-delimiter="; " collapse="year" disambiguate-add-givenname="true" disambiguate-add-names="true" disambiguate-add-year-suffix="true" et-al-min="3" et-al-use-first="1">
     <layout delimiter="; " prefix="(" suffix=")">
       <choose>
@@ -3853,6 +3856,8 @@
       </choose>
     </layout>
   </citation>
+
+
   <!-- Bibliography -->
   <macro name="bibliography-author-date">
     <group delimiter=". ">
@@ -3872,6 +3877,39 @@
       </choose>
     </group>
   </macro>
+
+  <macro name="layout-bibliography-item">
+    <choose>
+      <if type="classic">
+        <choose>
+          <if match="any" variable="archive editor translator publisher">
+            <text macro="bibliography-author-date"/>
+          </if>
+        </choose>
+      </if>
+      <else-if match="any" type="entry entry-dictionary entry-encyclopedia">
+        <choose>
+          <if variable="author">
+            <text macro="bibliography-author-date"/>
+          </if>
+          <else-if match="any" variable="DOI URL">
+            <text macro="bibliography-author-date"/>
+          </else-if>
+        </choose>
+      </else-if>
+      <else-if match="any" type="interview personal_communication">
+        <choose>
+          <if match="any" variable="archive archive-place container-title DOI number publisher references URL">
+            <text macro="bibliography-author-date"/>
+          </if>
+        </choose>
+      </else-if>
+      <else>
+        <text macro="bibliography-author-date"/>
+      </else>
+    </choose>
+  </macro>
+  
   <bibliography et-al-min="7" et-al-use-first="3" hanging-indent="true">
     <sort>
       <key macro="author-sort"/>
@@ -3886,39 +3924,44 @@
       <key variable="issued"/>
       <key macro="source-archive-bib"/>
     </sort>
+  
+    <!-- ===================== BIBLIOGRAFIA ===================== -->
     <layout suffix=".">
-      <choose>
-        <if type="classic">
-          <choose>
-            <if match="any" variable="archive editor translator publisher">
-              <text macro="bibliography-author-date"/>
-            </if>
-          </choose>
-        </if>
-        <else-if match="any" type="entry entry-dictionary entry-encyclopedia">
-          <choose>
-            <if variable="author">
-              <!-- Signed reference entries appear in the bibliography (CMOS18 14.132) -->
-              <text macro="bibliography-author-date"/>
-            </if>
-            <else-if match="any" variable="DOI URL">
-              <!-- Provide a bibliography if necessary identifying information is not in text -->
-              <text macro="bibliography-author-date"/>
-            </else-if>
-          </choose>
-        </else-if>
-        <else-if match="any" type="interview personal_communication">
-          <choose>
-            <if match="any" variable="archive archive-place container-title DOI number publisher references URL">
-              <!-- Personal communications only appear in the bibliography if the reader can retrieve them (CMOS18 14.13, 14.111) -->
-              <text macro="bibliography-author-date"/>
-            </if>
-          </choose>
-        </else-if>
-        <else>
-          <text macro="bibliography-author-date"/>
-        </else>
-      </choose>
+      <group delimiter="\n">
+        <choose>
+          <if variable="keyword" match="any" value="bib">
+            <text value="BIBLIOGRAFIA" font-style="italic" text-case="uppercase"/>
+            <newline/>
+            <text macro="layout-bibliography-item"/>
+          </if>
+        </choose>
+      </group>
+    </layout>
+  
+    <!-- ===================== SITOGRAFIA ===================== -->
+    <layout suffix=".">
+      <group delimiter="\n">
+        <choose>
+          <if variable="keyword" match="any" value="web">
+            <text value="SITOGRAFIA" font-style="italic" text-case="uppercase"/>
+            <newline/>
+            <text macro="layout-bibliography-item"/>
+          </if>
+        </choose>
+      </group>
+    </layout>
+  
+    <!-- ===================== DISCOGRAFIA ===================== -->
+    <layout suffix=".">
+      <group delimiter="\n">
+        <choose>
+          <if variable="keyword" match="any" value="disc">
+            <text value="DISCOGRAFIA" font-style="italic" text-case="uppercase"/>
+            <newline/>
+            <text macro="layout-bibliography-item"/>
+          </if>
+        </choose>
+      </group>
     </layout>
   </bibliography>
 </style>
