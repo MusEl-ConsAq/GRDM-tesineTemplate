@@ -1,69 +1,71 @@
--- separa_bibliografia.lua
--- Divide tutte le voci in tre sezioni finali secondo il campo 'type'
+-- multi-bib.lua
 
-local utils = require 'pandoc.utils'
-local citeproc = utils.citeproc
-local stringify = utils.stringify
-local List = require 'pandoc.List'
-
--- deepcopy semplice
-local function deepcopy(tbl)
-  if type(tbl) ~= "table" then return tbl end
-  local copy = {}
-  for k, v in pairs(tbl) do
-    copy[k] = deepcopy(v)
+-- La funzione principale che viene eseguita sull'intero documento Pandoc (AST).
+function Pandoc (doc)
+  -- Controlla se esistono metadati della bibliografia. Se no, non fare nulla.
+  if not doc.meta.bibliography then
+    return doc
   end
-  return copy
-end
 
--- Mappa type -> titolo e id del div
-local sections_map = {
-  bib = {title = "BIBLIOGRAFIA", id = "refs-bibl"},
-  web = {title = "SITOGRAFIA", id = "refs-sito"},
-  disc = {title = "DISCOGRAFIA", id = "refs-disc"}
-}
+  -- Tavole per separare le referenze in base al loro tipo.
+  local bib_items = {}
+  local web_items = {}
+  local disc_items = {}
 
-function Pandoc(doc)
-  -- Prendi tutte le references
-  local all_refs = utils.references(doc)
-  if not all_refs or #all_refs == 0 then return doc end
-
-  -- Dividi le references per type
-  local sections = {bib = {}, web = {}, disc = {}}
-  for _, ref in ipairs(all_refs) do
-    local t = ref.type and tostring(ref.type):lower() or "bib"
-    if sections[t] then
-      table.insert(sections[t], ref)
+  -- Scorre tutte le referenze caricate da Pandoc.
+  -- Grazie a `nocite: '@*'`, qui ci saranno TUTTE le referenze del file .bib.
+  for _, ref in ipairs(doc.meta.bibliography) do
+    -- Controlla il campo 'type' di ogni referenza.
+    -- ref.type è una stringa semplice se il valore nel .bib è {web}.
+    if ref.type == 'bib' then
+      table.insert(bib_items, ref)
+    elseif ref.type == 'web' then
+      table.insert(web_items, ref)
+    elseif ref.type == 'disc' then
+      table.insert(disc_items, ref)
     end
   end
 
-  -- Genera div per ogni sezione
-  for t, data in pairs(sections_map) do
-    local refs = sections[t]
-    if #refs > 0 then
-      -- Rendi id unici per evitare warning LaTeX
-      local tmp_refs = {}
-      for _, r in ipairs(refs) do
-        local copy = deepcopy(r)
-        copy.id = data.id .. "-" .. copy.id
-        table.insert(tmp_refs, copy)
-      end
+  -- Adesso abbiamo tre liste popolate. Procediamo a generare le sezioni.
+  -- Creeremo una lista di nuovi blocchi da aggiungere alla fine del documento.
+  local new_blocks = {}
 
-      -- Crea Pandoc temporaneo con nocite per tutte le voci filtrate
-      local tmp_doc = pandoc.Pandoc({}, {
-        references = List(tmp_refs),
-        nocite = pandoc.Inlines{
-          pandoc.Cite('@*', {pandoc.Citation('*', 'NormalCitation')})
-        }
-      })
-
-      local blocks = citeproc(tmp_doc).blocks
-
-      -- Inserisci titolo e div
-      table.insert(doc.blocks, pandoc.Header(1, data.title))
-      table.insert(doc.blocks, pandoc.Div(blocks, {id = data.id, class = "references"}))
+  -- 1. Sezione BIBLIOGRAFIA
+  if #bib_items > 0 then
+    -- Aggiunge l'intestazione
+    table.insert(new_blocks, pandoc.Header(1, "BIBLIOGRAFIA"))
+    -- Usa pandoc.utils.citeproc per formattare SOLO le referenze di tipo 'bib'
+    -- Il risultato è una lista di blocchi (di solito un Div con le referenze)
+    local formatted_bib = pandoc.utils.citeproc(bib_items, doc.meta)
+    for _, block in ipairs(formatted_bib) do
+      table.insert(new_blocks, block)
     end
   end
 
+  -- 2. Sezione SITOGRAFIA
+  if #web_items > 0 then
+    table.insert(new_blocks, pandoc.Header(1, "SITOGRAFIA"))
+    local formatted_web = pandoc.utils.citeproc(web_items, doc.meta)
+    for _, block in ipairs(formatted_web) do
+      table.insert(new_blocks, block)
+    end
+  end
+
+  -- 3. Sezione DISCOGRAFIA
+  if #disc_items > 0 then
+    table.insert(new_blocks, pandoc.Header(1, "DISCOGRAFIA"))
+    local formatted_disc = pandoc.utils.citeproc(disc_items, doc.meta)
+    for _, block in ipairs(formatted_disc) do
+      table.insert(new_blocks, block)
+    end
+  end
+
+  -- Aggiunge tutti i nuovi blocchi generati (intestazioni + referenze)
+  -- alla fine del corpo del documento.
+  for _, block in ipairs(new_blocks) do
+    table.insert(doc.blocks, block)
+  end
+
+  -- Ritorna il documento modificato.
   return doc
 end
