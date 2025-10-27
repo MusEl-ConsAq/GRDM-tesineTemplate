@@ -38,6 +38,7 @@ def main():
         abstract_content = "File RIASSUNTO.md non trovato."
         print(f"    [WARN] {riassunto_file} not found. Using default text.")
 
+    
     # ==========================================
     # 3. TROVA E ORDINA I FILE DELLE SEZIONI
     # ==========================================
@@ -46,11 +47,30 @@ def main():
         print(f"[ERROR] Directory {docs_dir} not found!")
         return 1
     
-    # Escludiamo RIASSUNTO.md dal corpo principale della tesina
-    files = sorted([f for f in docs_dir.glob("*.md") if f.name != "RIASSUNTO.md"])
+    # Escludiamo RIASSUNTO.md dal corpo principale
+    all_files = [f for f in docs_dir.glob("*.md") if f.name != "RIASSUNTO.md"]
+    
+    # Categorizziamo i file speciali
+    intro = [f for f in all_files if f.name.lower() == "introduzione.md"]
+    concl = [f for f in all_files if f.name.lower() == "conclusione.md"]
+    biblio = [f for f in all_files if f.name.lower() == "bibliografia.md"]
+    
+    # Tutti gli altri (in mezzo), ordinati alfabeticamente
+    middle = sorted([
+        f for f in all_files
+        if f not in intro + concl + biblio
+    ])
+    
+    # Costruiamo l’ordine finale
+    files = intro + middle + concl + biblio
     
     if not files:
         print(f"[WARN] No section .md files found in {docs_dir} (excluding RIASSUNTO.md).")
+    else:
+        print("[OK] Ordered files:")
+        for f in files:
+            print(f"   - {f.name}")
+
     
     # ==========================================
     # 4. CREA README.MD CON FRONTMATTER E CONTENUTI
