@@ -47,7 +47,6 @@ jobs:
         pandoc README.md \
           --pdf-engine=xelatex \
           --template=styles/templatePandoc.latex \
-          --citeproc \
           --lua-filter=lua-filters/separa_bibliografia.lua \
           -o "$PDF_NAME"
         echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
