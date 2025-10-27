@@ -8,16 +8,13 @@ local keywords_map = {
   disc = "refs-disc"
 }
 
-local List = require 'pandoc.List'
 local utils = require 'pandoc.utils'
 local citeproc = utils.citeproc
 local stringify = utils.stringify
+local List = require 'pandoc.List'
 
 -- Funzione principale
 function Pandoc(doc)
-  local meta = doc.meta
-
-  -- Prendi tutte le references generate dal motore interno citeproc
   local all_refs = utils.references(doc)
 
   if not all_refs or #all_refs == 0 then
@@ -41,18 +38,16 @@ function Pandoc(doc)
   local function make_div(id, refs)
     if #refs == 0 then return nil end
 
-    -- Crea un Pandoc Meta valido
-    local tmp_meta = pandoc.Meta()
-    tmp_meta.references = refs
-    tmp_meta.nocite = pandoc.Inlines{
-      pandoc.Cite('@*', {pandoc.Citation('*', 'NormalCitation')})
-    }
+    -- Crea un Pandoc temporaneo compatibile
+    local tmp_doc = pandoc.Pandoc({}, {
+      references = List(refs),
+      nocite = pandoc.Inlines{
+        pandoc.Cite('@*', {pandoc.Citation('*', 'NormalCitation')})
+      }
+    })
 
-    -- Genera i blocchi tramite citeproc
-    local tmp_doc = pandoc.Pandoc({}, tmp_meta)
     local blocks = citeproc(tmp_doc).blocks
 
-    -- Avvolgi in un Div con id unico
     return pandoc.Div(blocks, {id = id, class = "references"})
   end
 
@@ -60,7 +55,6 @@ function Pandoc(doc)
   for kw, id in pairs(keywords_map) do
     local div = make_div(id, sections[kw])
     if div then
-      -- Inserisce uno spazio e header prima del div
       table.insert(doc.blocks, pandoc.RawBlock('latex', '\n'))
       table.insert(doc.blocks, pandoc.Header(1, kw:upper()))
       table.insert(doc.blocks, div)
