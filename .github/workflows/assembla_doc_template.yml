@@ -4,10 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'docs/**'
-      - 'config.yml'
-      - 'styles/**'
-      - '.github/**/**'
+      - '**/**'
 
 permissions:
   contents: write
