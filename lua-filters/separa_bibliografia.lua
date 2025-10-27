@@ -28,7 +28,10 @@ function Pandoc(doc)
   local sections = { bib = {}, web = {}, disc = {} }
 
   for _, ref in ipairs(all_refs) do
-    local kw = (ref.keyword or ref.keywords or "bib"):lower()
+    local kw = "bib"  -- default
+    if ref.keywords then
+      kw = stringify(ref.keywords):lower()
+    end
     if sections[kw] then
       table.insert(sections[kw], ref)
     end
@@ -40,7 +43,9 @@ function Pandoc(doc)
     -- Crea un Pandoc metadata temporaneo
     local tmp_meta = pandoc.Meta()
     tmp_meta.references = refs
-    tmp_meta.nocite = pandoc.Inlines{pandoc.Cite('@*', {pandoc.Citation('*', 'NormalCitation')})}
+    tmp_meta.nocite = pandoc.Inlines{
+      pandoc.Cite('@*', {pandoc.Citation('*', 'NormalCitation')})
+    }
 
     -- Genera i blocchi tramite citeproc
     local blocks = citeproc(pandoc.Pandoc({}, tmp_meta)).blocks
@@ -53,8 +58,9 @@ function Pandoc(doc)
   for kw, id in pairs(keywords_map) do
     local div = make_div(id, sections[kw])
     if div then
-      table.insert(doc.blocks, pandoc.RawBlock('latex', '\n')) -- aggiunge spazio
-      table.insert(doc.blocks, pandoc.Header(1, kw:upper()))    -- intestazione
+      -- Inserisce un po' di spazio e header prima del div
+      table.insert(doc.blocks, pandoc.RawBlock('latex', '\n'))
+      table.insert(doc.blocks, pandoc.Header(1, kw:upper()))
       table.insert(doc.blocks, div)
     end
   end
