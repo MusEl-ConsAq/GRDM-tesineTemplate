@@ -336,7 +336,7 @@ $body$
 
 $if(csl-refs)$
 \clearpage
-%\section*{Bibliografia}
+\section*{Bibliografia}
 $endif$
 
 \end{document}
