@@ -1,17 +1,12 @@
 -- separa_bibliografia.lua
-
-local keywords_map = {
-  bib = "refs-bibl",
-  web = "refs-sito",
-  disc = "refs-disc"
-}
+-- Divide tutte le voci in tre sezioni finali secondo il campo 'type'
 
 local utils = require 'pandoc.utils'
 local citeproc = utils.citeproc
 local stringify = utils.stringify
 local List = require 'pandoc.List'
 
--- deepcopy custom
+-- deepcopy semplice
 local function deepcopy(tbl)
   if type(tbl) ~= "table" then return tbl end
   local copy = {}
@@ -21,53 +16,52 @@ local function deepcopy(tbl)
   return copy
 end
 
+-- Mappa type -> titolo e id del div
+local sections_map = {
+  bib = {title = "BIBLIOGRAFIA", id = "refs-bibl"},
+  web = {title = "SITOGRAFIA", id = "refs-sito"},
+  disc = {title = "DISCOGRAFIA", id = "refs-disc"}
+}
+
 function Pandoc(doc)
+  -- Prendi tutte le references
   local all_refs = utils.references(doc)
+  if not all_refs or #all_refs == 0 then return doc end
 
-  if not all_refs or #all_refs == 0 then
-    return doc
-  end
-
-  local sections = { bib = {}, web = {}, disc = {} }
-
+  -- Dividi le references per type
+  local sections = {bib = {}, web = {}, disc = {}}
   for _, ref in ipairs(all_refs) do
-    local kw = "bib"
-    if ref.keywords then
-      kw = stringify(ref.keywords):lower()
-    end
-    if sections[kw] then
-      table.insert(sections[kw], ref)
+    local t = ref.type and tostring(ref.type):lower() or "bib"
+    if sections[t] then
+      table.insert(sections[t], ref)
     end
   end
 
-  local function make_div(id, refs)
-    if #refs == 0 then return nil end
+  -- Genera div per ogni sezione
+  for t, data in pairs(sections_map) do
+    local refs = sections[t]
+    if #refs > 0 then
+      -- Rendi id unici per evitare warning LaTeX
+      local tmp_refs = {}
+      for _, r in ipairs(refs) do
+        local copy = deepcopy(r)
+        copy.id = data.id .. "-" .. copy.id
+        table.insert(tmp_refs, copy)
+      end
 
-    local tmp_refs = {}
-    for _, r in ipairs(refs) do
-      local rcopy = deepcopy(r)
-      rcopy.id = id .. "-" .. rcopy.id
-      table.insert(tmp_refs, rcopy)
-    end
+      -- Crea Pandoc temporaneo con nocite per tutte le voci filtrate
+      local tmp_doc = pandoc.Pandoc({}, {
+        references = List(tmp_refs),
+        nocite = pandoc.Inlines{
+          pandoc.Cite('@*', {pandoc.Citation('*', 'NormalCitation')})
+        }
+      })
 
-    local tmp_doc = pandoc.Pandoc({}, {
-      references = List(tmp_refs),
-      nocite = pandoc.Inlines{
-        pandoc.Cite('@*', {pandoc.Citation('*', 'NormalCitation')})
-      }
-    })
+      local blocks = citeproc(tmp_doc).blocks
 
-    local blocks = citeproc(tmp_doc).blocks
-
-    return pandoc.Div(blocks, {id = id, class = "references"})
-  end
-
-  for kw, id in pairs(keywords_map) do
-    local div = make_div(id, sections[kw])
-    if div then
-      table.insert(doc.blocks, pandoc.RawBlock('latex', '\n'))
-      table.insert(doc.blocks, pandoc.Header(1, kw:upper()))
-      table.insert(doc.blocks, div)
+      -- Inserisci titolo e div
+      table.insert(doc.blocks, pandoc.Header(1, data.title))
+      table.insert(doc.blocks, pandoc.Div(blocks, {id = data.id, class = "references"}))
     end
   end
 
