@@ -1,3 +1,0 @@
-# CONCLUSIONE
-
-Eppur si muove...
