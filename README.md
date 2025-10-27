@@ -15,7 +15,6 @@ toc: true
 toc-depth: 2
 bibliography: docs/bibliografia.bib
 csl: styles/consAq-author-date.csl
-nocite: "@*"
 ---
 
 
