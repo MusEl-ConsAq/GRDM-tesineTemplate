@@ -159,6 +159,7 @@ $if(csl-refs)$
 
 \newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
 {\begingroup\bibfont
+\clearpage
  \begin{list}{}{%
   \setlength{\itemindent}{0pt}
   \setlength{\leftmargin}{0pt}
@@ -333,10 +334,5 @@ $if(lot)$
 $endif$
 
 $body$
-
-$if(csl-refs)$
-\clearpage
-\section*{Bibliografia}
-$endif$
 
 \end{document}
