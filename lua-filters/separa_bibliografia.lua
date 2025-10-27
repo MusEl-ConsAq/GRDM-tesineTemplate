@@ -1,5 +1,5 @@
 -- separa_bibliografia.lua
--- Dividi le voci bibliografiche in tre sezioni finali secondo keyword
+-- Divide tutte le voci bibliografiche in tre sezioni finali secondo keyword
 -- Compatibile con Pandoc >=2.11, autore-anno
 
 local keywords_map = {
@@ -13,7 +13,6 @@ local citeproc = utils.citeproc
 local stringify = utils.stringify
 local List = require 'pandoc.List'
 
--- Funzione principale
 function Pandoc(doc)
   local all_refs = utils.references(doc)
 
@@ -34,13 +33,21 @@ function Pandoc(doc)
     end
   end
 
-  -- Funzione per creare un div con \nocite{*} filtrato
+  -- Funzione per creare un div con tutte le voci filtrate
   local function make_div(id, refs)
     if #refs == 0 then return nil end
 
-    -- Crea un Pandoc temporaneo compatibile
+    -- Modifica gli id di ogni reference per sezione (evita warning LaTeX)
+    local tmp_refs = {}
+    for _, r in ipairs(refs) do
+      local rcopy = pandoc.utils.deepcopy(r)
+      rcopy.id = id .. "-" .. rcopy.id
+      table.insert(tmp_refs, rcopy)
+    end
+
+    -- Crea un Pandoc temporaneo con nocite per tutte le voci
     local tmp_doc = pandoc.Pandoc({}, {
-      references = List(refs),
+      references = List(tmp_refs),
       nocite = pandoc.Inlines{
         pandoc.Cite('@*', {pandoc.Citation('*', 'NormalCitation')})
       }
@@ -51,7 +58,7 @@ function Pandoc(doc)
     return pandoc.Div(blocks, {id = id, class = "references"})
   end
 
-  -- Genera i tre div finali
+  -- Inserisce i div finali nel documento
   for kw, id in pairs(keywords_map) do
     local div = make_div(id, sections[kw])
     if div then
