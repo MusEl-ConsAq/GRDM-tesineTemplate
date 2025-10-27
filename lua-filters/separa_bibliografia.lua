@@ -40,7 +40,8 @@ function Pandoc(doc)
   -- Funzione per creare un div con \nocite{*} filtrato
   local function make_div(id, refs)
     if #refs == 0 then return nil end
-    -- Crea un Pandoc metadata temporaneo
+
+    -- Crea un Pandoc Meta valido
     local tmp_meta = pandoc.Meta()
     tmp_meta.references = refs
     tmp_meta.nocite = pandoc.Inlines{
@@ -48,7 +49,8 @@ function Pandoc(doc)
     }
 
     -- Genera i blocchi tramite citeproc
-    local blocks = citeproc(pandoc.Pandoc({}, tmp_meta)).blocks
+    local tmp_doc = pandoc.Pandoc({}, tmp_meta)
+    local blocks = citeproc(tmp_doc).blocks
 
     -- Avvolgi in un Div con id unico
     return pandoc.Div(blocks, {id = id, class = "references"})
@@ -58,7 +60,7 @@ function Pandoc(doc)
   for kw, id in pairs(keywords_map) do
     local div = make_div(id, sections[kw])
     if div then
-      -- Inserisce un po' di spazio e header prima del div
+      -- Inserisce uno spazio e header prima del div
       table.insert(doc.blocks, pandoc.RawBlock('latex', '\n'))
       table.insert(doc.blocks, pandoc.Header(1, kw:upper()))
       table.insert(doc.blocks, div)
