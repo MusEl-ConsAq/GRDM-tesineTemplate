@@ -3925,9 +3925,9 @@
       <key macro="source-archive-bib"/>
     </sort>
   
-    <!-- ===================== BIBLIOGRAFIA ===================== -->
     <layout suffix=".">
-      <group delimiter="\n">
+      <!-- ===================== BIBLIOGRAFIA ===================== -->
+      <group delimiter="\n\n">
         <choose>
           <if variable="keyword" match="any" value="bib">
             <text value="BIBLIOGRAFIA" font-style="italic" text-case="uppercase"/>
@@ -3935,27 +3935,21 @@
             <text macro="layout-bibliography-item"/>
           </if>
         </choose>
-      </group>
-    </layout>
   
-    <!-- ===================== SITOGRAFIA ===================== -->
-    <layout suffix=".">
-      <group delimiter="\n">
+        <!-- ===================== SITOGRAFIA ===================== -->
         <choose>
           <if variable="keyword" match="any" value="web">
+            <newline/>
             <text value="SITOGRAFIA" font-style="italic" text-case="uppercase"/>
             <newline/>
             <text macro="layout-bibliography-item"/>
           </if>
         </choose>
-      </group>
-    </layout>
   
-    <!-- ===================== DISCOGRAFIA ===================== -->
-    <layout suffix=".">
-      <group delimiter="\n">
+        <!-- ===================== DISCOGRAFIA ===================== -->
         <choose>
           <if variable="keyword" match="any" value="disc">
+            <newline/>
             <text value="DISCOGRAFIA" font-style="italic" text-case="uppercase"/>
             <newline/>
             <text macro="layout-bibliography-item"/>
@@ -3964,4 +3958,5 @@
       </group>
     </layout>
   </bibliography>
+
 </style>
