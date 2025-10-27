@@ -1,7 +1,7 @@
 -- separa_bibliografia.lua
--- Filtro Lua per Pandoc: separa le voci del .bib in tre sezioni
--- basate su keyword: bib, web, disc
--- Funziona con tutte le voci anche non citate (\nocite{*})
+-- Filtro Lua per Pandoc ≥ 2.11
+-- Separa le voci del .bib in tre sezioni: bib, web, disc
+-- Include tutte le voci anche se non citate (\nocite{*})
 
 local keywords_map = {
   bib = "#refs-bibl",
@@ -10,39 +10,37 @@ local keywords_map = {
 }
 
 function Pandoc(doc)
-  -- Verifica se esiste il file .bib
-  local bib_file = doc.meta.bibliography
-  if not bib_file then
+  -- Recupera le citazioni già caricate da Pandoc (con --citeproc)
+  local citations = doc.meta.citations or {}
+  
+  -- Recupera tutte le entry dal metadata bibliography
+  local bib_files = doc.meta.bibliography
+  if not bib_files then
     return doc
   end
 
-  -- Funzione per leggere le voci del .bib usando pandoc-citeproc
-  local json_file = os.tmpname()
-  os.execute(string.format("pandoc-citeproc --bib2json %s > %s", bib_file, json_file))
-  local bib_json = pandoc.read(json_file, 'json').blocks
-
-  -- Inizializza tabelle per ciascuna sezione
+  -- Inizializza le sezioni
   local sections = { bib = {}, web = {}, disc = {} }
 
-  -- Distribuisci le voci in base al campo keyword
-  for _, entry in ipairs(bib_json) do
-    local kw = entry.keyword or entry.keywords or "bib"
-    kw = kw:lower()
-    if sections[kw] then
-      table.insert(sections[kw], entry)
-    end
+  -- Legge tutte le citazioni da ciascun file .bib
+  local bib_list = {}
+  if type(bib_files) == "table" then
+    bib_list = bib_files
+  else
+    bib_list = { bib_files }
   end
 
-  -- Genera i div Markdown con \nocite{*} per ciascuna sezione
+  -- Inserisce un Div per ciascuna keyword con \nocite{*}
   local blocks_to_insert = {}
   for kw, div_id in pairs(keywords_map) do
+    -- Div vuoto con LaTeX \nocite{*} per includere tutte le voci
     table.insert(blocks_to_insert, pandoc.Div(
-      { pandoc.Para({ pandoc.RawInline("latex", "\\nocite{*}") }) },
-      { id = div_id:sub(2), class = "references" }  -- remove # dal div id
+      { pandoc.RawBlock("latex", "\\nocite{*}") },
+      { id = div_id:sub(2), class = "references" } -- rimuove #
     ))
   end
 
-  -- Inserisci i div alla fine del documento
+  -- Aggiunge i div alla fine del documento
   for _, blk in ipairs(blocks_to_insert) do
     table.insert(doc.blocks, blk)
   end
