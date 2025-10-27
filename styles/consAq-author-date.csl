@@ -3909,7 +3909,6 @@
       </else>
     </choose>
   </macro>
-  
   <bibliography et-al-min="7" et-al-use-first="3" hanging-indent="true">
     <sort>
       <key macro="author-sort"/>
@@ -3924,39 +3923,34 @@
       <key variable="issued"/>
       <key macro="source-archive-bib"/>
     </sort>
-  
+
     <layout suffix=".">
-      <!-- ===================== BIBLIOGRAFIA ===================== -->
-      <group delimiter="\n\n">
+      <group delimiter="&#10;&#10;">
+        
+        <!-- ===================== BIBLIOGRAFIA ===================== -->
         <choose>
           <if variable="keyword" match="any" value="bib">
-            <text value="BIBLIOGRAFIA" font-style="italic" text-case="uppercase"/>
-            <newline/>
-            <text macro="layout-bibliography-item"/>
+            <text value="BIBLIOGRAFIA" font-style="italic" text-case="uppercase" prefix="&#10;&#10;" suffix="&#10;"/>
+            <text macro="bibliography-author-date"/>
           </if>
         </choose>
   
         <!-- ===================== SITOGRAFIA ===================== -->
         <choose>
           <if variable="keyword" match="any" value="web">
-            <newline/>
-            <text value="SITOGRAFIA" font-style="italic" text-case="uppercase"/>
-            <newline/>
-            <text macro="layout-bibliography-item"/>
+            <text value="SITOGRAFIA" font-style="italic" text-case="uppercase" prefix="&#10;&#10;" suffix="&#10;"/>
+            <text macro="bibliography-author-date"/>
           </if>
         </choose>
   
         <!-- ===================== DISCOGRAFIA ===================== -->
         <choose>
           <if variable="keyword" match="any" value="disc">
-            <newline/>
-            <text value="DISCOGRAFIA" font-style="italic" text-case="uppercase"/>
-            <newline/>
-            <text macro="layout-bibliography-item"/>
+            <text value="DISCOGRAFIA" font-style="italic" text-case="uppercase" prefix="&#10;&#10;" suffix="&#10;"/>
+            <text macro="bibliography-author-date"/>
           </if>
         </choose>
       </group>
     </layout>
   </bibliography>
-
 </style>
