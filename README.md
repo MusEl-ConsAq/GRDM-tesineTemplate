@@ -15,8 +15,8 @@ toc: true
 toc-depth: 2
 bibliography:
   bib: docs/bibliografia.bib
-  sit: docs/sitografia.bib
   dis: docs/discografia.bib
+  sit: docs/sitografia.bib
 csl: styles/consAq-author-date.csl
 nocite: "@*"
 ---
@@ -66,4 +66,19 @@ Eppur si muove...
 ::: {#refs-disc}
 :::
 
+
+# BIBLIOGRAFIA
+
+::: {#refs-bib}
+:::
+
+# DISCOGRAFIA
+
+::: {#refs-dis}
+:::
+
+# SITOGRAFIA
+
+::: {#refs-sit}
+:::
 
