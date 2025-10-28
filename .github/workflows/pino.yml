@@ -20,12 +20,13 @@ jobs:
     steps:
     - name: Install System & Build Dependencies
       run: |
-        # Aggiungiamo gli strumenti per compilare Haskell: ghc e cabal-install
-        # Aggiungiamo anche le librerie necessarie alla compilazione: gmp e zlib
+        # --- LA MODIFICA È QUI ---
+        # Aggiungiamo --repository=... per abilitare il repository 'testing'
+        # Questo ci darà accesso a 'cabal-install' e 'ghc'
         apk add --no-cache \
+          --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing \
           git bash tar python3 py3-pip pandoc \
           ghc cabal-install gmp zlib
-          
         pip install --break-system-packages pyyaml
 
     # --- NUOVO BLOCCO PER LA COMPILAZIONE CON CACHING ---
