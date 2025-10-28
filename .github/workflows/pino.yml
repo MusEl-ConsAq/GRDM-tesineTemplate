@@ -18,7 +18,6 @@ jobs:
       image: ghcr.io/kjarosh/latex:2025.1-small
 
     steps:
-    steps:
     - name: Install System & Build Dependencies
       run: |
         # --- LA SOLUZIONE FINALE ---
