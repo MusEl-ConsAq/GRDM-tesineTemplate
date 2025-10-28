@@ -11,6 +11,7 @@ abstract: |
 header-includes:
   - \usepackage{styles/tesina}
 documentclass: article
+fontsize: 12pt
 toc: true
 toc-depth: 2
 bibliography:
