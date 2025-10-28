@@ -17,7 +17,8 @@ function Pandoc(doc)
   end
 
   -- aggiungiamo i blocchi generati all'inizio del documento
-  doc.blocks = pandoc.List(blocks) .. doc.blocks
+  doc.blocks = pandoc.List(blocks):extend(doc.blocks)
+
 
   return doc
 end
