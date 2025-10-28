@@ -1,0 +1,34 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/kjarosh/latex:2025.1-small
+
+    steps:
+    - name: Install dependencies
+      run: |
+        # Aggiungiamo gcompat per la compatibilità con binari glibc
+        apk add --no-cache git bash tar python3 py3-pip pandoc gcompat
+        pip install --break-system-packages pyyaml
+
+    - name: Install Microsoft Core Fonts (including Arial)
+      run: |
+        apk add --no-cache msttcorefonts-installer fontconfig
+        update-ms-fonts
+        fc-cache -f
+
+    # --- NUOVO STEP PER PANDOC-CROSSREF ---
+    - name: Install pandoc-crossref
+      run: |
+        VERSION="0.3.17.0" # Controlla su GitHub se c'è una versione più nuova
+        URL="https://github.com/lierdakil/pandoc-crossref/releases/download/v${VERSION}/pandoc-crossref-linux-x86_64.tar.gz"
+        
+        # Scarica, estrai e installa nel PATH
+        wget -q $URL -O pandoc-crossref.tar.gz
+        tar -xzf pandoc-crossref.tar.gz
+        mv pandoc-crossref /usr/local/bin/
+        chmod +x /usr/local/bin/pandoc-crossref
+        
+        # Verifica che l'installazione sia andata a buon fine
+        echo "pandoc-crossref version:"
+        pandoc-crossref --version
