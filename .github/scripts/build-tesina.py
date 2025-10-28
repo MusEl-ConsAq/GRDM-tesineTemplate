@@ -95,7 +95,7 @@ def main():
             out.write(f"  {line}\n")
 
         out.write("header-includes:\n")
-        out.write("  - \\usepackage{tesina}\n") # Corretto come da consiglio precedente
+        out.write("  - \\usepackage{styles/tesina}\n") # Corretto come da consiglio precedente
         out.write("documentclass: article\n")
         out.write("toc: true\n")
         out.write("toc-depth: 2\n")
