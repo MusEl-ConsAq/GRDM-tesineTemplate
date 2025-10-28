@@ -160,6 +160,7 @@ $if(csl-refs)$
 \newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
 {\begingroup\bibfont
 \clearpage
+\section*{Bibliografia}
  \begin{list}{}{%
   \setlength{\itemindent}{0pt}
   \setlength{\leftmargin}{0pt}
