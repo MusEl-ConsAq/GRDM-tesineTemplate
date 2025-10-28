@@ -13,7 +13,10 @@ header-includes:
 documentclass: article
 toc: true
 toc-depth: 2
-bibliography: docs/bibliografia.bib
+bibliography:
+  bib: docs/bibliografia.bib
+  sit: docs/sitografia.bib
+  dis: docs/discografia.bib
 csl: styles/consAq-author-date.csl
 nocite: "@*"
 ---
@@ -47,5 +50,20 @@ Eppur si muove...
 
 
 
+# BIBLIOGRAFIA
+
+::: {#refs-bib}
+:::
+
+# SITOGRAFIA
+
+::: {#refs-web}
+:::
+
+
+# DISCOGRAFIA
+
+::: {#refs-disc}
+:::
 
 
