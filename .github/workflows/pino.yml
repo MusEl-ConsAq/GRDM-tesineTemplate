@@ -18,18 +18,31 @@ jobs:
       image: ghcr.io/kjarosh/latex:2025.1-small
 
     steps:
+    steps:
     - name: Install System & Build Dependencies
       run: |
-        # --- LA MODIFICA È QUI ---
-        # Aggiungiamo --repository=... per abilitare il repository 'testing'
-        # Questo ci darà accesso a 'cabal-install' e 'ghc'
+        # --- LA SOLUZIONE FINALE ---
+        # 1. Sovrascriviamo temporaneamente la lista dei repository di sistema
+        #    per puntare a 'edge' invece di 'v3.21'. Questo dà ad apk
+        #    la visione completa dell'ecosistema 'edge'.
+        echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories
+        echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+        echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
+        # 2. Aggiorniamo l'indice dei pacchetti con la nuova lista
+        apk update
+        
+        # 3. Ora installiamo tutto. Apk troverà ghc e cabal-install senza problemi.
         apk add --no-cache \
-          --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing \
           git bash tar python3 py3-pip pandoc \
           ghc cabal-install gmp zlib
+          
         pip install --break-system-packages pyyaml
 
-    # --- NUOVO BLOCCO PER LA COMPILAZIONE CON CACHING ---
+
+
+        
+        # --- NUOVO BLOCCO PER LA COMPILAZIONE CON CACHING ---
     - name: Cache and build pandoc-crossref from source
       uses: actions/cache@v4
       id: cache-pandoc-crossref
