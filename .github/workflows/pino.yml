@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         # Aggiungiamo gcompat per la compatibilità con binari glibc
-        apk add --no-cache git bash tar python3 py3-pip pandoc gcompat
+        apk add --no-cache git bash tar python3 py3-pip pandoc gcompat gmp zlib
         pip install --break-system-packages pyyaml
 
     - name: Install Microsoft Core Fonts (including Arial)
