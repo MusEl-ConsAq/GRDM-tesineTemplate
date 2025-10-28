@@ -90,6 +90,15 @@
 \captionsetup{font=small, skip=10pt}
 
 % ============================================
+% BLOCK QUOTES - Rientro e font ridotto
+% ============================================
+\RequirePackage{etoolbox} % Pacchetto per modificare ambienti esistenti
+\AtBeginEnvironment{quote}{%
+  \fontsize{11}{13}\selectfont % Imposta la dimensione del font a 11pt
+  \singlespacing % Assicura che l'interlinea sia singola rispetto al nuovo font
+}
+
+% ============================================
 % FINITO - SEMPLICE, no logica
 % ============================================
 
