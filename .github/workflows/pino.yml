@@ -18,27 +18,48 @@ jobs:
       image: ghcr.io/kjarosh/latex:2025.1-small
 
     steps:
-    - name: Install dependencies
+    - name: Install System & Build Dependencies
       run: |
-        # Aggiungiamo gcompat per la compatibilità con binari glibc
-        apk add --no-cache git bash tar python3 py3-pip pandoc gcompat gmp zlib
+        # Aggiungiamo gli strumenti per compilare Haskell: ghc e cabal-install
+        # Aggiungiamo anche le librerie necessarie alla compilazione: gmp e zlib
+        apk add --no-cache \
+          git bash tar python3 py3-pip pandoc \
+          ghc cabal-install gmp zlib
+          
         pip install --break-system-packages pyyaml
 
-    - name: Debug pandoc-crossref Dependencies
+    # --- NUOVO BLOCCO PER LA COMPILAZIONE CON CACHING ---
+    - name: Cache and build pandoc-crossref from source
+      uses: actions/cache@v4
+      id: cache-pandoc-crossref
+      with:
+        # La chiave della cache include la versione. Se la cambi, la cache si invalida.
+        key: pandoc-crossref-v0.3.17.0
+        # Mettiamo in cache sia l'eseguibile finale sia i pacchetti di build di cabal
+        path: |
+          /usr/local/bin/pandoc-crossref
+          ~/.cabal
+    
+    - name: Build and install pandoc-crossref if not cached
+      if: steps.cache-pandoc-crossref.outputs.cache-hit != 'true'
       run: |
-        echo "--- Running dependency check on pandoc-crossref ---"
-        # 1. Assicuriamoci che gli strumenti di diagnostica siano installati
-        # 'ldd' si trova in 'musl-utils', wget per scaricare
-        apk add --no-cache musl-utils wget
+        echo "Cache not found. Compiling pandoc-crossref from source..."
         
-        # 2. Scarichiamo il binario di pandoc-crossref
-        VERSION="0.3.17.0"
-        URL="https://github.com/lierdakil/pandoc-crossref/releases/download/v${VERSION}/pandoc-crossref-linux-x86_64.tar.gz"
-        wget -q $URL -O pandoc-crossref.tar.gz
-        tar -xzf pandoc-crossref.tar.gz
+        # Inizializziamo il database dei pacchetti di Cabal
+        cabal update
         
-        # 3. Eseguiamo ldd per vedere le dipendenze
-        # Usiamo '|| true' per assicurarci che lo step non fallisca
-        # anche se ldd restituisce un errore, così possiamo leggere l'output.
-        ldd pandoc-crossref || true
-        echo "--- End of dependency check ---"
+        # Installiamo pandoc-crossref. Cabal gestirà il download e la compilazione.
+        # Questo comando copierà l'eseguibile finale in ~/.cabal/bin/
+        cabal install pandoc-crossref-0.3.17.0 --install-method=copy --overwrite-policy=always
+        
+        # Spostiamo l'eseguibile compilato in una cartella del PATH
+        mv ~/.cabal/bin/pandoc-crossref /usr/local/bin/
+        chmod +x /usr/local/bin/pandoc-crossref
+        
+        echo "pandoc-crossref compiled and installed successfully."
+
+    - name: Verify pandoc-crossref installation
+      run: |
+        echo "Verifying pandoc-crossref..."
+        pandoc-crossref --version
+    # --- FINE DEL NUOVO BLOCCO ---
