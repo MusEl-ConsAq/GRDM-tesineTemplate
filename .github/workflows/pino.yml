@@ -1,3 +1,16 @@
+name: debug test pandoc
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**/**'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  
 jobs:
   build:
     runs-on: ubuntu-latest
