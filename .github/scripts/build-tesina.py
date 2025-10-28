@@ -15,7 +15,6 @@ def main():
     with open('config.yml', 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
     
-    # Estraiamo l'intero blocco 'tesina' per pulizia
     tesina_data = config.get('tesina', {})
 
     # ==========================================
@@ -46,12 +45,34 @@ def main():
         print(f"[ERROR] Directory {docs_dir} not found!")
         return 1
     
-    # Escludiamo RIASSUNTO.md dal corpo principale della tesina
     files = sorted([f for f in docs_dir.glob("*.md") if f.name != "RIASSUNTO.md"])
     
     if not files:
         print(f"[WARN] No section .md files found in {docs_dir} (excluding RIASSUNTO.md).")
     
+    # =========================================================
+    # 3.5. NUOVA SEZIONE: TROVA DINAMICAMENTE I FILE BIBLIOGRAFICI
+    # =========================================================
+    print("[*] Finding bibliography files in docs/...")
+    bib_dir = Path("docs")
+    
+    # Definisci qui la mappatura tra chiave e nome del file
+    bib_mapping = {
+        "bib": "bibliografia.bib",
+        "sit": "sitografia.bib",
+        "dis": "discografia.bib"
+    }
+
+    found_bib_files = {} # Un dizionario per contenere i file trovati
+    for key, filename in bib_mapping.items():
+        file_path = bib_dir / filename
+        if file_path.exists():
+            # Usiamo il percorso relativo corretto per il frontmatter
+            found_bib_files[key] = str(file_path).replace('\\', '/')
+            print(f"    [OK] Found: {file_path}")
+        else:
+            print(f"    [INFO] Skipping (not found): {file_path}")
+
     # ==========================================
     # 4. CREA README.MD CON FRONTMATTER E CONTENUTI
     # ==========================================
@@ -79,13 +100,18 @@ def main():
         # Includi lo stile e altre opzioni di Pandoc
         out.write("header-includes:\n")
         out.write("  - \\usepackage{styles/tesina}\n")
-        out.write("documentclass: article\n") # Usiamo 'report' per una struttura migliore
+        out.write("documentclass: article\n")
         out.write("toc: true\n")
         out.write("toc-depth: 2\n")
 
-        # === Configurazione bibliografia CiteProc ===
+        # === Configurazione bibliografia CiteProc (MODIFICATA) ===
+        if found_bib_files:
+            out.write("bibliography:\n")
+            for key, path in found_bib_files.items():
+                out.write(f"  {key}: {path}\n")
+        else:
+            print("[WARN] No bibliography files found. 'bibliography' field will not be added to frontmatter.")
 
-        out.write(f"bibliography: docs/{tesina_data.get('bibliography', 'bibliografia.bib')}\n")
         out.write("csl: styles/consAq-author-date.csl\n")
         out.write(r'nocite: "@*"' + "\n")
 
