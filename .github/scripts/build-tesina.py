@@ -100,6 +100,7 @@ def main():
         out.write("header-includes:\n")
         out.write("  - \\usepackage{styles/tesina}\n")
         out.write("documentclass: article\n")
+        out.write("fontsize: 12pt\n")
         out.write("toc: true\n")
         out.write("toc-depth: 2\n")
 
