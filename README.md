@@ -49,24 +49,6 @@ L’incisione di *Prometeo* di Luigi Nono è documentata in [@nono1993].
 Eppur si muove...
 
 
-
-# BIBLIOGRAFIA
-
-::: {#refs-bib}
-:::
-
-# SITOGRAFIA
-
-::: {#refs-web}
-:::
-
-
-# DISCOGRAFIA
-
-::: {#refs-disc}
-:::
-
-
 # BIBLIOGRAFIA
 
 ::: {#refs-bib}
