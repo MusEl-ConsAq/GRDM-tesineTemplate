@@ -24,12 +24,13 @@ jobs:
         apt-get install -y git python3-pip pandoc
         pip install pyyaml
 
-    - name: Install Lua >= 2.11
+    - name: Install latest Pandoc
       run: |
-        apt-get update
-        apt-get install -y lua5.4
-        ln -sf /usr/bin/lua5.4 /usr/local/bin/lua
-        
+        PANDOC_VERSION=2.21
+        wget https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb
+        dpkg -i pandoc-${PANDOC_VERSION}-1-amd64.deb
+        rm pandoc-${PANDOC_VERSION}-1-amd64.deb
+
     - name: Install Microsoft Core Fonts (including Arial)
       run: |
         apt-get update
