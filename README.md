@@ -45,6 +45,8 @@ Come sottolinea Del Duca [@delduca1987, p.17]:
 
 Come si vede in @fig:bellissima, il risultato è…
 
+{#tbl:Caption}
+
 a   b   c
 --- --- ---
 1   2   3
