@@ -37,7 +37,7 @@ Come sottolinea Del Duca [@delduca1987, p.17]:
 
 > la sintesi digitale...
 > blablabla,
-> ecco, usando > si cita, infatti
+> ecco, usando ">" si cita, infatti
 > questa è una citazione
 
 Per ulteriori approfondimenti sugli strumenti digitali, vedere [@tanzi2005].
