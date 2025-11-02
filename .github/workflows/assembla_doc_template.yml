@@ -24,25 +24,18 @@ jobs:
         apt-get install -y git python3-pip pandoc
         pip install pyyaml
 
-    - name: Install latest Pandoc via PPA
+    - name: Install Haskell Stack
       run: |
-        # Aggiorna lista pacchetti
         apt-get update
+        apt-get install -y curl build-essential libgmp-dev
+        curl -sSL https://get.haskellstack.org/ | sh
 
-        # Installa software-properties-common per gestire i PPA
-        apt-get install -y software-properties-common wget
+    - name: Install latest Pandoc via Stack
+      run: |
+        stack upgrade --binary-only
+        stack install pandoc
+        export PATH=$HOME/.local/bin:$PATH
 
-        # Aggiungi PPA di Alex P. che mantiene Pandoc aggiornato
-        add-apt-repository -y ppa:alex-p/pandoc
-
-        # Aggiorna lista pacchetti dopo aver aggiunto il PPA
-        apt-get update
-
-        # Installa l'ultima versione di Pandoc dal PPA
-        apt-get install -y pandoc
-
-        # Verifica versione Pandoc e Lua integrato
-        pandoc --version
 
     - name: Install Microsoft Core Fonts (including Arial)
       run: |
