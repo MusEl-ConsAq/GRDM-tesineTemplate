@@ -46,7 +46,7 @@ jobs:
     - name: Read font from config.yaml
       id: read_font
       run: |
-        FONT=$(python3 get_font.py)
+        FONT=$(python3 .github/scripts/get_font.py)
         echo "FONT=$FONT" >> $GITHUB_ENV
 
     - name: Show FONT
