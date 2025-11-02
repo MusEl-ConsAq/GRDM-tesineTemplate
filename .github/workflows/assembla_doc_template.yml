@@ -35,9 +35,9 @@ jobs:
 
     - name: Install pandoc-crossref
       run: |
-        PANDOC_XREF_VERSION=0.4.17.0
-        wget https://github.com/lierdakil/pandoc-crossref/releases/download/v${PANDOC_XREF_VERSION}/pandoc-crossref-${PANDOC_XREF_VERSION}-x86_64-Linux.tar.xz
-        tar -xJf pandoc-crossref-${PANDOC_XREF_VERSION}-x86_64-Linux.tar.xz
+        PANDOC_XREF_VERSION=0.3.22
+        wget https://github.com/lierdakil/pandoc-crossref/releases/download/v${PANDOC_XREF_VERSION}/pandoc-crossref-Linux-X64.tar.xz
+        tar -xJf pandoc-crossref-Linux-X64.tar.xz
         mv pandoc-crossref /usr/local/bin/
         pandoc-crossref --version
 
