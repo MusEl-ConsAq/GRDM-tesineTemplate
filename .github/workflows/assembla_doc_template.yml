@@ -33,6 +33,14 @@ jobs:
         rm pandoc-${PANDOC_VERSION}-1-amd64.deb
         pandoc --version
 
+    - name: Install pandoc-crossref
+      run: |
+        PANDOC_XREF_VERSION=0.4.17.0
+        wget https://github.com/lierdakil/pandoc-crossref/releases/download/v${PANDOC_XREF_VERSION}/pandoc-crossref-${PANDOC_XREF_VERSION}-x86_64-Linux.tar.xz
+        tar -xJf pandoc-crossref-${PANDOC_XREF_VERSION}-x86_64-Linux.tar.xz
+        mv pandoc-crossref /usr/local/bin/
+        pandoc-crossref --version
+
 
     - name: Install Microsoft Core Fonts (including Arial)
       run: |
@@ -62,6 +70,7 @@ jobs:
           --pdf-engine=xelatex \
           --template=styles/templatePandoc.latex \
           --lua-filter=lua-filters/multibib.lua \
+          --filter pandoc-crossref \
           -o "$PDF_NAME"
         echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
         mkdir -p pages_artifact
