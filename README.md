@@ -34,6 +34,7 @@ La sintesi digitale nella musica elettronica è stata studiata in modo approfond
 Diversi autori hanno affrontato il tema della musica elettronica ([@delduca1987]; [@bianchini2000]; [@dannenberg2003]).
 
 Come sottolinea Del Duca [@delduca1987, p.17]:
+
 > la sintesi digitale...
 > blablabla,
 > ecco, usando > si cita, infatti
