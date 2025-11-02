@@ -24,17 +24,14 @@ jobs:
         apt-get install -y git python3-pip pandoc
         pip install pyyaml
 
-    - name: Install Haskell Stack
+    - name: Install latest Pandoc via official .deb
       run: |
+        PANDOC_VERSION=3.7.0.2
+        wget https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb
         apt-get update
-        apt-get install -y curl build-essential libgmp-dev
-        curl -sSL https://get.haskellstack.org/ | sh
-
-    - name: Install latest Pandoc via Stack
-      run: |
-        stack upgrade --binary-only
-        stack install pandoc
-        export PATH=$HOME/.local/bin:$PATH
+        apt-get install -y ./pandoc-${PANDOC_VERSION}-1-amd64.deb
+        rm pandoc-${PANDOC_VERSION}-1-amd64.deb
+        pandoc --version
 
 
     - name: Install Microsoft Core Fonts (including Arial)
