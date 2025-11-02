@@ -24,6 +24,12 @@ jobs:
         apt-get install -y git python3-pip pandoc
         pip install pyyaml
 
+    - name: Install Lua >= 2.11
+      run: |
+        apt-get update
+        apt-get install -y lua5.4
+        ln -sf /usr/bin/lua5.4 /usr/local/bin/lua
+        
     - name: Install Microsoft Core Fonts (including Arial)
       run: |
         apt-get update
