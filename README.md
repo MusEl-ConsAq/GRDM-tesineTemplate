@@ -48,7 +48,8 @@ Come si vede in @fig:bellissima, il risultato è…
 | Col1 | Col2 |
 |------|------|
 | A    | B    |
-{#tbl:esempio}
+
+: Caption {#tbl:esempio}
 
 Nella Tabella @tbl:esempio vediamo i dati…
 
