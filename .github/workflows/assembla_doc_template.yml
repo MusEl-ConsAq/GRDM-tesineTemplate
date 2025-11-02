@@ -24,15 +24,6 @@ jobs:
         apt-get install -y git python3-pip pandoc
         pip install pyyaml
 
-    - name: Check for Liberation Sans
-      run: |
-        if fc-list | grep -iq "Liberation Sans"; then
-          echo "Liberation Sans is installed. Continuing..."
-        else
-          echo "Liberation Sans is not installed. Exiting workflow."
-          exit 1
-        fi
-
     - name: Install latest Pandoc via official .deb
       run: |
         PANDOC_VERSION=3.7.0.2
