@@ -16,11 +16,8 @@ except yaml.YAMLError as e:
     sys.exit(1)
 
 # Prendi il font dal YAML, default 'liberation'
-font = (
-    cfg.get("tesina", {})
-       .get("environment", {})
-       .get("font", "liberation")
-).lower()
+font = cfg.get("environment", {}).get("font", "liberation").lower()
+
 
 # Validazione base
 if font not in ["arial", "liberation"]:
