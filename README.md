@@ -40,6 +40,25 @@ Come sottolinea Del Duca [@delduca1987, p.17]:
 > ecco, usando ">" si cita, infatti
 > questa è una citazione
 
+
+![Una bella figura](docs/images/img001.png){#fig:bellissima width=60%}
+
+Come si vede in @fig:bellissima, il risultato è…
+
+| Col1 | Col2 |
+|------|------|
+| A    | B    |
+{#tbl:esempio}
+
+Nella Tabella @tbl:esempio vediamo i dati…
+
+$$
+E = mc^2
+$$ {#eq:energia}
+
+L’equazione @eq:energia mostra la leggenda…
+
+
 Per ulteriori approfondimenti sugli strumenti digitali, vedere [@tanzi2005].
 
 L’incisione di *Prometeo* di Luigi Nono è documentata in [@nono1993].
