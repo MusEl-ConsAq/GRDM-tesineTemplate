@@ -10,7 +10,7 @@ with open(config_file, "r") as f:
     config = yaml.safe_load(f)
 
 # Prendi il font dal YAML, default 'liberation'
-font = cfg.get("environment", {}).get("font", "liberation").lower()
+font = config.get("environment", {}).get("font", "liberation").lower()
 
 # Validazione base: accetta solo 'arial' o 'liberation'
 if chosen_font not in ["arial", "liberation"]:
