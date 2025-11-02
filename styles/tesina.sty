@@ -16,14 +16,33 @@
   right=2cm
 ]{geometry}
 
+
 % ============================================
-% FONT - Arial fisso
+% FONT
 % ============================================
 \RequirePackage{fontspec}
-\setmainfont{Arial}
-\setsansfont{Arial}
-\setmonofont{Arial}
+\RequirePackage{etoolbox} % per i condizionali
+
+\input{config_fonts.tex}
+
+\newcommand{\defaultfont}{Liberation Sans}
+
+% scelgo il font in base alla variabile
+\ifdefstring{\chosenfont}{arial}{
+    % Se è arial
+    \setmainfont{Arial}
+    \setsansfont{Arial}
+    \setmonofont{Arial}
+}{
+    % Altrimenti
+    \setmainfont{\defaultfont}
+    \setsansfont{\defaultfont}
+    \setmonofont{Liberation Mono}
+}
+
 \renewcommand{\familydefault}{\sfdefault}
+
+
 
 % ============================================
 % INTERLINEA - Singola

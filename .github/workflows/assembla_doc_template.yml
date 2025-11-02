@@ -43,8 +43,17 @@ jobs:
         mv pandoc-crossref /usr/local/bin/
         pandoc-crossref --version
 
+    - name: Read font from config.yaml
+      id: read_font
+      run: |
+        FONT=$(python3 get_font.py)
+        echo "FONT=$FONT" >> $GITHUB_ENV
+
+    - name: Show FONT
+      run: echo "FONT=$FONT"
 
     - name: Install Microsoft Core Fonts (including Arial)
+      if: env.FONT == 'arial'
       run: |
         apt-get update
         # Accetta automaticamente la licenza EULA dei Microsoft fonts
