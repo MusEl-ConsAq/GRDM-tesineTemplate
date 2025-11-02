@@ -24,12 +24,25 @@ jobs:
         apt-get install -y git python3-pip pandoc
         pip install pyyaml
 
-    - name: Install latest Pandoc
+    - name: Install latest Pandoc via PPA
       run: |
-        PANDOC_VERSION=2.21
-        wget https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb
-        dpkg -i pandoc-${PANDOC_VERSION}-1-amd64.deb
-        rm pandoc-${PANDOC_VERSION}-1-amd64.deb
+        # Aggiorna lista pacchetti
+        apt-get update
+
+        # Installa software-properties-common per gestire i PPA
+        apt-get install -y software-properties-common wget
+
+        # Aggiungi PPA di Alex P. che mantiene Pandoc aggiornato
+        add-apt-repository -y ppa:alex-p/pandoc
+
+        # Aggiorna lista pacchetti dopo aver aggiunto il PPA
+        apt-get update
+
+        # Installa l'ultima versione di Pandoc dal PPA
+        apt-get install -y pandoc
+
+        # Verifica versione Pandoc e Lua integrato
+        pandoc --version
 
     - name: Install Microsoft Core Fonts (including Arial)
       run: |
