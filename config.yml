@@ -15,4 +15,4 @@ tesina:
 
   
 environment:
-  font: arial
+  font: #arial
