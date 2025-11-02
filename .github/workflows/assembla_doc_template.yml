@@ -70,6 +70,12 @@ jobs:
         rm -f README.md *.pdf        
         python3 .github/scripts/build-tesina.py
 
+    - name: Generate config_fonts.tex
+      id: generate_font
+      run: |
+        # Esegui lo script Python che legge config.yaml e genera config_fonts.tex
+        python3 .github/scripts/tmpTeXFont.py
+
     - name: Build PDF with Pandoc
       run: |
         TITLE=$(sed -n '/^---$/,/^---$/p' README.md | grep '^title:' | head -n1 | sed 's/title:[[:space:]]*//; s/^ *//; s/ *$//; s/[*]//g')

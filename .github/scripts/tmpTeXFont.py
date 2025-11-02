@@ -2,19 +2,15 @@
 import yaml
 
 # File di input e output
-config_file = "config.yaml"
+config_file = "config.yml"
 output_file = "styles/config_fonts.tex"
 
 # Leggi il YAML
 with open(config_file, "r") as f:
     config = yaml.safe_load(f)
 
-# Prendi il font scelto dall'enviroment
-chosen_font = (
-    config.get("tesina", {})
-          .get("environment", {})
-          .get("font", "liberation")
-).lower()
+# Prendi il font dal YAML, default 'liberation'
+font = cfg.get("environment", {}).get("font", "liberation").lower()
 
 # Validazione base: accetta solo 'arial' o 'liberation'
 if chosen_font not in ["arial", "liberation"]:
