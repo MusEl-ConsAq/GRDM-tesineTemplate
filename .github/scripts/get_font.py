@@ -18,7 +18,7 @@ except yaml.YAMLError as e:
 # Prendi il font dal YAML, default 'liberation'
 font = (
     cfg.get("tesina", {})
-       .get("enviroment", {})
+       .get("environment", {})
        .get("font", "liberation")
 ).lower()
 
