@@ -43,6 +43,9 @@ jobs:
         mv pandoc-crossref /usr/local/bin/
         pandoc-crossref --version
 
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
     - name: Read font from config.yaml
       id: read_font
       run: |
@@ -61,9 +64,6 @@ jobs:
         apt-get install -y ttf-mscorefonts-installer fontconfig
         # Aggiorna la cache dei font per renderli disponibili subito
         fc-cache -f
-
-    - name: Checkout repository
-      uses: actions/checkout@v4
 
     - name: Extract metadata & concatenate markdown
       run: |
