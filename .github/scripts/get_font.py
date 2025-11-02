@@ -3,7 +3,7 @@ import yaml
 import sys
 
 # File di configurazione
-config_file = "config.yaml"
+config_file = "config.yml"
 
 try:
     with open(config_file, "r") as f:
