@@ -15,19 +15,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/kjarosh/latex:2025.1-small
+      image: ghcr.io/dmgiulioromano/latex-docker-ubuntu:2025.1-small
 
     steps:
     - name: Install dependencies
       run: |
-        apk add --no-cache git bash tar python3 py3-pip pandoc
-        pip install --break-system-packages pyyaml
+        sudo apt-get update
+        sudo apt-get install -y git python3-pip pandoc
+        pip install pyyaml
 
     - name: Install Microsoft Core Fonts (including Arial)
       run: |
-        apk add --no-cache msttcorefonts-installer fontconfig
-        update-ms-fonts
-        fc-cache -f
+        sudo apt-get update
+        # Accetta automaticamente la licenza EULA dei Microsoft fonts
+        echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+        sudo apt-get install -y ttf-mscorefonts-installer fontconfig
+        # Aggiorna la cache dei font per renderli disponibili subito
+        sudo fc-cache -f
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -52,9 +56,10 @@ jobs:
         echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
         mkdir -p pages_artifact
         cp "${PDF_NAME}" pages_artifact/latest.pdf
+
     - uses: actions/upload-artifact@v4
       with:
-        name: progetto-completo_pdf
+        name: "${{ env.PDF_NAME }}"
         path: "${{ env.PDF_NAME }}"
         overwrite: true
  
