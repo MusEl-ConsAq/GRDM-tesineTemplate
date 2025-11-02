@@ -18,9 +18,10 @@ Come sottolinea Del Duca [@delduca1987, p.17]:
 
 Come si vede in @fig:bellissima, il risultato è…
 
-| Col1 | Col2 |
-|------|------|
-| A    | B    |
+a   b   c
+--- --- ---
+1   2   3
+4   5   6
 
 : Caption {#tbl:esempio}
 
