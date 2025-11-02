@@ -50,9 +50,9 @@ a   b   c
 1   2   3
 4   5   6
 
-: Caption #tbl:esempio
+: Caption
 
-Nella Tabella @tbl:esempio vediamo i dati…
+Nella Tabella @tbl:Caption vediamo i dati…
 
 $$
 E = mc^2
