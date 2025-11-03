@@ -4,11 +4,11 @@ Questa sezione illustra come utilizzare le principali funzionalità di Pandoc pe
 
 ---
 
-## 1. CITAZIONI BIBLIOGRAFICHE
+# 1. CITAZIONI BIBLIOGRAFICHE
 
 Le citazioni si basano sui file `.bib` presenti nella cartella `docs/` (bibliografia.bib, discografia.bib, sitografia.bib). Pandoc utilizza lo stile CSL specificato nel frontmatter per formattare automaticamente le citazioni.
 
-### 1.1 Citazione semplice
+## 1.1 Citazione semplice
 
 Per citare un'opera in modo generico:
 
@@ -18,7 +18,7 @@ La sintesi digitale è stata ampiamente studiata `[@delduca1987]`.
 
 **Risultato:** La sintesi digitale è stata ampiamente studiata (Del Duca 1987).
 
-### 1.2 Citazioni multiple
+## 1.2 Citazioni multiple
 
 Per citare più opere contemporaneamente:
 
@@ -28,7 +28,7 @@ Diversi autori hanno affrontato il tema ([@delduca1987]; [@bianchini2000]; [@dan
 
 **Risultato:** Diversi autori hanno affrontato il tema (Del Duca 1987; Bianchini e Cipriani 2000; Dannenberg et al. 2003).
 
-### 1.3 Citazione con numero di pagina
+## 1.3 Citazione con numero di pagina
 
 Per citare una pagina specifica:
 
@@ -38,7 +38,7 @@ Come sottolinea Del Duca [@delduca1987, p. 17], la sintesi granulare...
 
 **Risultato:** Come sottolinea Del Duca (1987, p. 17), la sintesi granulare...
 
-### 1.4 Citazione testuale (blocco)
+## 1.4 Citazione testuale (blocco)
 
 Per riportare una citazione letterale estesa, usa il simbolo `>`:
 
@@ -54,11 +54,11 @@ Come afferma Adorno [@adorno1959, p. 23]:
 
 ---
 
-## 2. TABELLE
+# 2. TABELLE
 
 Pandoc supporta la creazione di tabelle con riferimenti incrociati. È fondamentale includere sia la didascalia (caption) che l'identificatore per poter richiamare la tabella nel testo.
 
-### 2.1 Sintassi base
+## 2.1 Sintassi base
 
 a       b       c
 ---     ---     ---
@@ -76,7 +76,7 @@ a       b       c
 - **Didascalia:** `: Testo della didascalia`
 - **Identificatore:** `{#tbl:nome}` (per i riferimenti incrociati)
 
-### 2.2 Riferimento alla tabella
+## 2.2 Riferimento alla tabella
 
 Per richiamare la tabella nel testo:
 
@@ -86,7 +86,7 @@ Come si vede nella Tabella @tbl:identificatore, i risultati mostrano...
 
 **Risultato:** Come si vede nella Tabella 1, i risultati mostrano...
 
-### 2.3 Esempio completo
+## 2.3 Esempio completo
 
 ```csound
 Parametro       Valore      Unità
@@ -103,11 +103,11 @@ La Tabella @tbl:parametri mostra le impostazioni utilizzate nell'esperimento.
 
 ---
 
-## 3. EQUAZIONI MATEMATICHE
+# 3. EQUAZIONI MATEMATICHE
 
 Le equazioni utilizzano la sintassi LaTeX e possono essere referenziate nel testo grazie a `pandoc-crossref`.
 
-### 3.1 Sintassi base
+## 3.1 Sintassi base
 
 
 $$
@@ -120,7 +120,7 @@ $$ {#eq:identificatore}
 - **Contenuto LaTeX:** formula matematica standard
 - **Identificatore:** `{#eq:nome}` sulla stessa riga della chiusura
 
-### 3.2 Riferimento all'equazione
+## 3.2 Riferimento all'equazione
 
 
 L'Equazione @eq:identificatore mostra la relazione energia-massa...
@@ -128,7 +128,7 @@ L'Equazione @eq:identificatore mostra la relazione energia-massa...
 
 **Risultato:** L'Equazione (1) mostra la relazione energia-massa...
 
-### 3.3 Esempi comuni
+## 3.3 Esempi comuni
 
 **Formula semplice:**
 
@@ -155,11 +155,11 @@ $$ {#eq:somma}
 
 ---
 
-## 4. FIGURE E IMMAGINI
+# 4. FIGURE E IMMAGINI
 
 Esistono due metodi principali per inserire immagini: la sintassi Pandoc (più semplice, con riferimenti automatici) e l'ambiente LaTeX `wrapfigure` (per testo che scorre attorno all'immagine).
 
-### 4.1 Figure con Pandoc (metodo consigliato)
+## 4.1 Figure con Pandoc (metodo consigliato)
 
 **Sintassi:**
 
@@ -186,7 +186,7 @@ La Figura @fig:spettro mostra la distribuzione delle frequenze nel tempo.
 - Numerazione automatica
 - Riferimenti incrociati funzionanti
 
-### 4.2 Wrapfigure (testo che scorre attorno)
+## 4.2 Wrapfigure (testo che scorre attorno)
 
 Per far scorrere il testo attorno a un'immagine, usa l'ambiente LaTeX `wrapfigure`:
 
@@ -226,7 +226,7 @@ sulla scomposizione del segnale audio in brevi segmenti temporali chiamati
 permette di ottenere trasformazioni sonore complesse...
 ```
 
-### 4.3 Confronto: Pandoc vs Wrapfigure
+## 4.3 Confronto: Pandoc vs Wrapfigure
 
 ```csound
 | Caratteristica | Pandoc `![...]` | Wrapfigure |
@@ -241,15 +241,15 @@ permette di ottenere trasformazioni sonore complesse...
 
 ---
 
-## 5. RIEPILOGO RAPIDO
+# 5. RIEPILOGO RAPIDO
 
-### Citazioni
+## Citazioni
 - Semplice: `[@chiave]`
 - Con pagina: `[@chiave, p. 17]`
 - Multiple: `[@chiave1]; [@chiave2]`
 - Blocco: righe che iniziano con `>`
 
-### Tabelle
+## Tabelle
 
 ```csound
 col1    col2    col3
@@ -261,7 +261,7 @@ a       b       c
 Riferimento: `@tbl:nome`
 ```
 
-### Equazioni
+## Equazioni
 
 $$
 formula LaTeX
@@ -269,7 +269,7 @@ $$ {#eq:nome}
 
 Riferimento: `@eq:nome`
 
-### Figure
+## Figure
 
 ![Didascalia](docs/images/img001.png){#fig:nome width=60%}
 
@@ -277,7 +277,7 @@ Riferimento: @fig:nome
 
 ---
 
-## 6. CONSIGLI PRATICI
+# 6. CONSIGLI PRATICI
 
 1. **Identificatori univoci:** Usa nomi descrittivi e unici per ogni elemento (`#fig:spettrogramma`, `#tbl:risultati`, `#eq:fourier`)
 
@@ -293,7 +293,7 @@ Riferimento: @fig:nome
 
 ---
 
-## Sezione di esempio con tutti gli elementi
+# Sezione di esempio con tutti gli elementi
 
 Di seguito un esempio che integra tutti gli elementi:
 
