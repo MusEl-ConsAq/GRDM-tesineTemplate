@@ -39,9 +39,9 @@ Le citazioni si basano sui file `.bib` presenti nella cartella `docs/` (bibliogr
 
 Per citare un'opera in modo generico:
 
-
+```text
 La sintesi digitale è stata ampiamente studiata `[@delduca1987]`.
-
+```
 
 **Risultato:** La sintesi digitale è stata ampiamente studiata (Del Duca 1987).
 
@@ -49,9 +49,9 @@ La sintesi digitale è stata ampiamente studiata `[@delduca1987]`.
 
 Per citare più opere contemporaneamente:
 
-
+```text
 Diversi autori hanno affrontato il tema `([@delduca1987]; [@bianchini2000]; [@dannenberg2003])`.
-
+```
 
 **Risultato:** Diversi autori hanno affrontato il tema ([@delduca1987]; [@bianchini2000]; [@dannenberg2003]).
 
@@ -59,9 +59,9 @@ Diversi autori hanno affrontato il tema `([@delduca1987]; [@bianchini2000]; [@da
 
 Per citare una pagina specifica:
 
-
+```text
 Come sottolinea Del Duca `[@delduca1987, p. 17]`, la sintesi granulare...
-
+```
 
 **Risultato:** Come sottolinea Del Duca [@delduca1987, p. 17], la sintesi granulare...
 
@@ -107,9 +107,9 @@ a       b       c
 
 Per richiamare la tabella nel testo:
 
-
+```text
 Come si vede nella Tabella @tbl:identificatore, i risultati mostrano...
-
+```
 
 **Risultato:** Come si vede nella Tabella 1, i risultati mostrano...
 
@@ -153,9 +153,9 @@ $$ {#eq:identificatore}
 
 ## 3.2 Riferimento all'equazione
 
-
+```text
 L'Equazione @eq:identificatore mostra la relazione energia-massa...
-
+```
 
 **Risultato:** L'Equazione (1) mostra la relazione energia-massa...
 
@@ -242,7 +242,7 @@ Per far scorrere il testo attorno a un'immagine, usa l'ambiente LaTeX `wrapfigur
 - Il riferimento si fa con `\ref{fig:nome}` in LaTeX, NON con `@fig:nome`
 
 **Esempio d'uso corretto:**
-```latex
+
 \begin{wrapfigure}{r}{0.35\textwidth}
   \centering
   \includegraphics[width=0.33\textwidth]{docs/images/diagramma.png}
@@ -255,7 +255,7 @@ scorrere correttamente attorno all'immagine. La sintesi granulare si basa
 sulla scomposizione del segnale audio in brevi segmenti temporali chiamati 
 "grani", ognuno dei quali viene processato indipendentemente. Questa tecnica 
 permette di ottenere trasformazioni sonore complesse...
-```
+
 
 ## 4.3 Confronto: Pandoc vs Wrapfigure
 
