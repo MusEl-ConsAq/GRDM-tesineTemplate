@@ -52,39 +52,6 @@ $if(verbatim-in-note)$
 $endif$
 \usepackage{xcolor}
 
-% ============================================
-% CONFIGURAZIONE LISTINGS - Codice ottimizzato
-% ============================================
-$if(use_listings)$
-\usepackage{listings}
-\newcommand{\passthrough}[1]{#1}
-
-% Configurazione globale codice
-\lstset{
-  basicstyle=\footnotesize\ttfamily,
-  breaklines=true,
-  breakatwhitespace=false,
-  postbreak=\mbox{\textcolor{gray}{\ensuremath{\hookrightarrow}}\space},
-  xleftmargin=1.5cm,
-  xrightmargin=0.5cm,
-  frame=l,
-  framerule=2pt,
-  rulecolor=\color{gray!40},
-  framesep=8pt,
-  backgroundcolor=\color{gray!5},
-  showspaces=false,
-  showstringspaces=false,
-  showtabs=false,
-  tabsize=2,
-  keepspaces=true,
-  columns=flexible
-}
-$endif$
-
-
-
-
-
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
