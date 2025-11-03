@@ -240,6 +240,7 @@ permette di ottenere trasformazioni sonore complesse...
  **Posizionamento**  Centro pagina             Testo attorno 
  **Quando usare**    Maggior parte dei casi    Solo se necessario 
 
+: Descrizione della tabella {#tbl:tab}
 
 **Raccomandazione:** Usa la sintassi Pandoc (`![...]`) come default. Ricorri a `wrapfigure` solo quando hai davvero bisogno che il testo scorra attorno all'immagine.
 
