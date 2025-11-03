@@ -106,7 +106,7 @@ jobs:
         pandoc README.md \
           --from markdown \
           --to latex \
-          --template=template.latex \
+          --template=styles/templatePandoc.latex \
           -o output.tex
 
         
