@@ -57,6 +57,28 @@ $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
 
+
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  commandchars=\\\{\},
+  breaklines=true,
+  breakanywhere=true,
+  fontsize=\small,
+  frame=single,
+  framesep=6pt,
+  xleftmargin=1.5cm,
+  xrightmargin=0.5cm
+}
+
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.95}
+\newenvironment{Shaded}{
+  \begin{snugshade}
+}{
+  \end{snugshade}
+}
+
+
 $if(tables)$
 \usepackage{longtable,booktabs,array}
 $if(multirow)$
