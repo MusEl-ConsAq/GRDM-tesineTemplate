@@ -66,6 +66,28 @@
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
 
+
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  commandchars=\\\{\},
+  breaklines=true,
+  breakanywhere=true,
+  fontsize=\small,
+  frame=single,
+  framesep=6pt,
+  xleftmargin=1.5cm,
+  xrightmargin=0.5cm
+}
+
+\usepackage{framed}
+\definecolor{shadecolor}{gray}{0.95}
+\newenvironment{Shaded}{
+  \begin{snugshade}
+}{
+  \end{snugshade}
+}
+
+
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
