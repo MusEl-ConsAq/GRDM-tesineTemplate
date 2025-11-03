@@ -116,9 +116,13 @@ $$ {#eq:identificatore}
 
 
 **Componenti:**
+
 - **Delimitatori:** `$$` (apertura) e `$$` (chiusura)
+  
 - **Contenuto LaTeX:** formula matematica standard
+  
 - **Identificatore:** `{#eq:nome}` sulla stessa riga della chiusura
+  
 
 ## 3.2 Riferimento all'equazione
 
