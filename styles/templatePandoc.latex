@@ -55,7 +55,7 @@ $endif$
 % ============================================
 % CONFIGURAZIONE LISTINGS - Codice ottimizzato
 % ============================================
-$if(listings)$
+$if(use_listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
 
