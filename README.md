@@ -194,7 +194,7 @@ Esistono due metodi principali per inserire immagini: la sintassi Pandoc (più s
 
 **Sintassi:**
 
-```Markdown
+```C
 ![Didascalia dell'immagine](percorso/immagine.png){#fig:identificatore width=60%}
 ```
 
