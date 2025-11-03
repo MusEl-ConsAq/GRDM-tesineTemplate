@@ -52,12 +52,49 @@ $if(verbatim-in-note)$
 $endif$
 \usepackage{xcolor}
 
+% ============================================
+% CONFIGURAZIONE LISTINGS - Codice ottimizzato
+% ============================================
 $if(listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
+
+% Dialetti (mantieni se necessario)
 \lstset{defaultdialect=[5.3]Lua}
 \lstset{defaultdialect=[x86masm]Assembler}
+
+% Configurazione globale codice
+\lstset{
+  % Font e dimensione - 10pt
+  basicstyle=\footnotesize\ttfamily,
+  
+  % Gestione righe lunghe - WRAPPING AUTOMATICO
+  breaklines=true,                      % Manda a capo righe lunghe
+  breakatwhitespace=false,              % Può spezzare ovunque
+  postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space}, % Simbolo continuazione
+  
+  % Margini - RIENTRATO rispetto al testo normale
+  xleftmargin=1.5cm,                    % Rientro sinistro 1.5cm
+  xrightmargin=0.5cm,                   % Margine destro 0.5cm
+  
+  % Frame - Solo linea verticale a sinistra
+  frame=l,                              % Bordo solo a sinistra
+  framerule=2pt,                        % Spessore linea
+  rulecolor=\color{gray!40},            % Grigio chiaro
+  framesep=8pt,                         % Padding interno
+  
+  % Aspetto
+  backgroundcolor=\color{gray!5},       % Sfondo grigio molto chiaro
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  keepspaces=true,
+  columns=flexible
+}
 $endif$
+
+
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
