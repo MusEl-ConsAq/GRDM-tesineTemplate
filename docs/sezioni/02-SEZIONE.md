@@ -242,8 +242,8 @@ permette di ottenere trasformazioni sonore complesse...
 
  Caratteristica      Pandoc `![...]`           Wrapfigure 
  ---                 ---                       ---
- **Semplicità**      ✓ Molto semplice          ✗ Richiede LaTeX 
- **Riferimenti**     ✓ `@fig:nome`             ✗ `\ref{fig:nome}` 
+ **Semplicità**      si Molto semplice          no Richiede LaTeX 
+ **Riferimenti**     si `@fig:nome`             no `\ref{fig:nome}` 
  **Posizionamento**  Centro pagina             Testo attorno 
  **Quando usare**    Maggior parte dei casi    Solo se necessario 
 
