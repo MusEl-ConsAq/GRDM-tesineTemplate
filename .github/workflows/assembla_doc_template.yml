@@ -93,27 +93,33 @@ jobs:
         TIMESTAMP=$(date +%Y%m%d_%H%M%S)
         #PDF_NAME="${SAFE_TITLE}-${TIMESTAMP}.pdf"
         PDF_NAME="${SAFE_TITLE}-CONSAQ-${TIMESTAMP}.pdf"
+        #pandoc README.md \
+        #  --pdf-engine=xelatex \
+        #  --template=styles/templatePandoc.latex \
+        #  --syntax-highlighting=tango \
+        #  --filter pandoc-crossref \
+        #  --lua-filter=lua-filters/multibib.lua \
+        #  -o "$PDF_NAME"
+        #echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
+        #mkdir -p pages_artifact
+        #cp "${PDF_NAME}" pages_artifact/latest.pdf
         pandoc README.md \
-          --pdf-engine=xelatex \
-          --template=styles/templatePandoc.latex \
-          --syntax-highlighting=tango \
-          --filter pandoc-crossref \
-          --lua-filter=lua-filters/multibib.lua \
-          -o "$PDF_NAME"
-        echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
-        mkdir -p pages_artifact
-        cp "${PDF_NAME}" pages_artifact/latest.pdf
+          --from markdown \
+          --to latex \
+          --template=template.latex \
+          -o output.tex
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: "${{ env.PDF_NAME }}"
-        path: "${{ env.PDF_NAME }}"
-        overwrite: true
+        
+    #- uses: actions/upload-artifact@v4
+    #  with:
+    #    name: "${{ env.PDF_NAME }}"
+    #    path: "${{ env.PDF_NAME }}"
+    #    overwrite: true
  
-    - name: Upload artifact per Pages
-      uses: actions/upload-pages-artifact@v4
-      with:
-        path: pages_artifact
+    #- name: Upload artifact per Pages
+    #  uses: actions/upload-pages-artifact@v4
+    #  with:
+    #    path: pages_artifact
 
 
     - name: Commit del documento assemblato
@@ -124,7 +130,7 @@ jobs:
         git config --global user.name "GitHub Action"
         rm -f *.pdf
         git add -u
-        git add README.md
+        git add output.tex # README.md
         git diff --staged --quiet || git commit -m "Auto-aggiornamento documento con template [skip ci]"
         
     - name: Push delle modifiche
@@ -133,9 +139,9 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: ${{ github.ref_name }}
         
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy su GitHub Pages
-        uses: actions/deploy-pages@v4
+  #deploy:
+  #  needs: build
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Deploy su GitHub Pages
+  #      uses: actions/deploy-pages@v4
