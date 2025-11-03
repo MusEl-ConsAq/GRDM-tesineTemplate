@@ -18,31 +18,43 @@ jobs:
       image: ghcr.io/dmgiulioromano/latex-docker-ubuntu:2025.1-small
 
     steps:
-    - name: Install dependencies
+    - name: Install all dependencies in one step
       run: |
+        # Update apt solo una volta
         apt-get update
-        apt-get install -y git python3-pip pandoc fonts-liberation
-        fc-cache -f -v
+        
+        # Installa dipendenze base
+        apt-get install -y git python3-pip fonts-liberation wget
         pip install pyyaml
-        fc-list | grep -i "Liberation Sans"
-
-    - name: Install latest Pandoc via official .deb
-      run: |
+        
+        # Download in parallelo (background jobs)
         PANDOC_VERSION=3.8.2
-        wget https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb
-        apt-get update
-        apt-get install -y ./pandoc-${PANDOC_VERSION}-1-amd64.deb
-        rm pandoc-${PANDOC_VERSION}-1-amd64.deb
-        pandoc --version
-
-    - name: Install pandoc-crossref
-      run: |
         PANDOC_XREF_VERSION=0.3.22
-        wget https://github.com/lierdakil/pandoc-crossref/releases/download/v${PANDOC_XREF_VERSION}/pandoc-crossref-Linux-X64.tar.xz
+        
+        wget https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb &
+        PANDOC_PID=$!
+        
+        wget https://github.com/lierdakil/pandoc-crossref/releases/download/v${PANDOC_XREF_VERSION}/pandoc-crossref-Linux-X64.tar.xz &
+        CROSSREF_PID=$!
+        
+        # Aspetta che i download finiscano
+        wait $PANDOC_PID
+        wait $CROSSREF_PID
+        
+        # Installazioni in sequenza (veloci comunque)
+        apt-get install -y ./pandoc-${PANDOC_VERSION}-1-amd64.deb
         tar -xJf pandoc-crossref-Linux-X64.tar.xz
         mv pandoc-crossref /usr/local/bin/
+        
+        # Cleanup
+        rm pandoc-${PANDOC_VERSION}-1-amd64.deb pandoc-crossref-Linux-X64.tar.xz
+        
+        # Verifica
+        fc-cache -f -v
+        pandoc --version
         pandoc-crossref --version
-
+        fc-list | grep -i "Liberation Sans"
+        
     - name: Checkout repository
       uses: actions/checkout@v4
 
