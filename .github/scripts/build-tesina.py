@@ -103,7 +103,6 @@ def main():
         out.write("fontsize: 12pt\n")
         out.write("toc: true\n")
         out.write("toc-depth: 2\n")
-        out.write("listings: true\n")
 
 
         if found_bib_files:
