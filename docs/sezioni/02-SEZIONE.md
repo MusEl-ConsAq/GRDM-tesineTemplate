@@ -23,20 +23,20 @@ La sintesi digitale è stata ampiamente studiata `[@delduca1987]`.
 Per citare più opere contemporaneamente:
 
 
-Diversi autori hanno affrontato il tema ([@delduca1987]; [@bianchini2000]; [@dannenberg2003]).
+Diversi autori hanno affrontato il tema `([@delduca1987]; [@bianchini2000]; [@dannenberg2003])`.
 
 
-**Risultato:** Diversi autori hanno affrontato il tema (Del Duca 1987; Bianchini e Cipriani 2000; Dannenberg et al. 2003).
+**Risultato:** Diversi autori hanno affrontato il tema ([@delduca1987]; [@bianchini2000]; [@dannenberg2003]).
 
 ## 1.3 Citazione con numero di pagina
 
 Per citare una pagina specifica:
 
 
-Come sottolinea Del Duca [@delduca1987, p. 17], la sintesi granulare...
+Come sottolinea Del Duca `[@delduca1987, p. 17]`, la sintesi granulare...
 
 
-**Risultato:** Come sottolinea Del Duca (1987, p. 17), la sintesi granulare...
+**Risultato:** Come sottolinea Del Duca [@delduca1987, p. 17], la sintesi granulare...
 
 ## 1.4 Citazione testuale (blocco)
 
