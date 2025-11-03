@@ -88,7 +88,7 @@ Come si vede nella Tabella @tbl:identificatore, i risultati mostrano...
 
 ## 2.3 Esempio completo
 
-```csound
+
 Parametro       Valore      Unità
 -----------     -------     ------
 Frequenza       440         Hz
@@ -96,7 +96,7 @@ Durata          2.5         s
 Ampiezza        0.8         dB
 
 : Parametri dell'oscillatore {#tbl:parametri}
-```
+
 
 La Tabella @tbl:parametri mostra le impostazioni utilizzate nell'esperimento.
 
