@@ -103,12 +103,6 @@ jobs:
         echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
         mkdir -p pages_artifact
         cp "${PDF_NAME}" pages_artifact/latest.pdf
-        pandoc README.md \
-          --from markdown \
-          --to latex \
-          --template=styles/templatePandoc.latex \
-          -o output.tex
-
         
     - uses: actions/upload-artifact@v4
       with:
@@ -130,7 +124,7 @@ jobs:
         git config --global user.name "GitHub Action"
         rm -f *.pdf
         git add -u
-        git add output.tex # README.md
+        git add README.md
         git diff --staged --quiet || git commit -m "Auto-aggiornamento documento con template [skip ci]"
         
     - name: Push delle modifiche
