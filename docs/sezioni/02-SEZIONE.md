@@ -232,14 +232,14 @@ permette di ottenere trasformazioni sonore complesse...
 
 ## 4.3 Confronto: Pandoc vs Wrapfigure
 
-```csound
-| Caratteristica | Pandoc `![...]` | Wrapfigure |
-|----------------|-----------------|------------|
-| **Semplicità** | ✓ Molto semplice | ✗ Richiede LaTeX |
-| **Riferimenti** | ✓ `@fig:nome` | ✗ `\ref{fig:nome}` |
-| **Posizionamento** | Centro pagina | Testo attorno |
-| **Quando usare** | Maggior parte dei casi | Solo se necessario |
-```
+
+ Caratteristica      Pandoc `![...]`           Wrapfigure 
+ ---------------     ---------------           ------------
+ **Semplicità**      ✓ Molto semplice          ✗ Richiede LaTeX 
+ **Riferimenti**     ✓ `@fig:nome`             ✗ `\ref{fig:nome}` 
+ **Posizionamento**  Centro pagina             Testo attorno 
+ **Quando usare**    Maggior parte dei casi    Solo se necessario 
+
 
 **Raccomandazione:** Usa la sintassi Pandoc (`![...]`) come default. Ricorri a `wrapfigure` solo quando hai davvero bisogno che il testo scorra attorno all'immagine.
 
