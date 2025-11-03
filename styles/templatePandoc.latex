@@ -52,15 +52,34 @@ $if(verbatim-in-note)$
 $endif$
 \usepackage{xcolor}
 
+
+%$if(listings)$
+%\usepackage{listings}
+%\newcommand{\passthrough}[1]{#1}
+%\lstset{defaultdialect=[5.3]Lua}
+%\lstset{defaultdialect=[x86masm]Assembler}
+%$endif$
 $if(listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
 \lstset{defaultdialect=[5.3]Lua}
 \lstset{defaultdialect=[x86masm]Assembler}
+\lstset{
+  basicstyle=\small\ttfamily,
+  backgroundcolor=\color{gray!5},
+  xleftmargin=2cm,                   % rientro di 2cm
+  xrightmargin=1cm,
+  frame=leftline,                     % solo linea a sinistra
+  framerule=2pt,                      % spessore linea
+  rulecolor=\color{gray!30},         % colore linea
+  breaklines=true
+}
 $endif$
+
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
+
 
 
 $if(tables)$
