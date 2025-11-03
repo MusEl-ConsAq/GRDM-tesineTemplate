@@ -23,7 +23,6 @@ Come sottolinea Del Duca [@delduca1987, p.17]:
 
 Questo paragrafo spiega il diagramma. Puoi continuare a scrivere testo qui, ed esso scorrerà automaticamente a sinistra dell’immagine.
 
-![Una bella figura](docs/images/img001.png){#fig:bellissima width=60%}
 
 Come si vede in @fig:bellissima, il risultato è…
 
@@ -42,6 +41,8 @@ E = mc^2
 $$ {#eq:energia}
 
 L’equazione @eq:energia mostra la leggenda…
+
+![Una bella figura](docs/images/img001.png){#fig:bellissima width=60%}
 
 
 Per ulteriori approfondimenti sugli strumenti digitali, vedere [@tanzi2005].
