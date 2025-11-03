@@ -39,9 +39,9 @@ Le citazioni si basano sui file `.bib` presenti nella cartella `docs/` (bibliogr
 
 Per citare un'opera in modo generico:
 
-
+```text
 La sintesi digitale è stata ampiamente studiata `[@delduca1987]`.
-
+```
 
 **Risultato:** La sintesi digitale è stata ampiamente studiata (Del Duca 1987).
 
@@ -49,9 +49,9 @@ La sintesi digitale è stata ampiamente studiata `[@delduca1987]`.
 
 Per citare più opere contemporaneamente:
 
-
+```text
 Diversi autori hanno affrontato il tema `([@delduca1987]; [@bianchini2000]; [@dannenberg2003])`.
-
+```
 
 **Risultato:** Diversi autori hanno affrontato il tema ([@delduca1987]; [@bianchini2000]; [@dannenberg2003]).
 
@@ -59,9 +59,9 @@ Diversi autori hanno affrontato il tema `([@delduca1987]; [@bianchini2000]; [@da
 
 Per citare una pagina specifica:
 
-
+```text
 Come sottolinea Del Duca `[@delduca1987, p. 17]`, la sintesi granulare...
-
+```
 
 **Risultato:** Come sottolinea Del Duca [@delduca1987, p. 17], la sintesi granulare...
 
@@ -97,21 +97,27 @@ a       b       c
 
 
 **Componenti essenziali:**    
-- **Riga delle intestazioni:** `a  b  c` (separati da spazi o tab)    
-- **Riga di separazione:** `---  ---  ---` (indica dove iniziano i dati)    
-- **Righe di dati:** valori separati da spazi multipli    
-- **Didascalia:** `: Testo della didascalia`    
-- **Identificatore:** `{#tbl:nome}` (per i riferimenti incrociati)    
+
+- **Riga delle intestazioni:** `a  b  c` (separati da spazi o tab)
+  
+- **Riga di separazione:** `---  ---  ---` (indica dove iniziano i dati)
+  
+- **Righe di dati:** valori separati da spazi multipli
+  
+- **Didascalia:** `: Testo della didascalia`
+  
+- **Identificatore:** `{#tbl:nome}` (per i riferimenti incrociati)
+  
 
 ## 2.2 Riferimento alla tabella
 
 Per richiamare la tabella nel testo:
 
-
+```text
 Come si vede nella Tabella @tbl:identificatore, i risultati mostrano...
+```
 
-
-**Risultato:** Come si vede nella Tabella 1, i risultati mostrano...
+**Risultato:** Come si vede nella @tbl:identificatore, i risultati mostrano...
 
 ## 2.3 Esempio completo
 
@@ -195,7 +201,8 @@ Esistono due metodi principali per inserire immagini: la sintassi Pandoc (più s
 **Sintassi:**
 
 ```text
-![Didascalia dell'immagine](percorso/immagine.png){#fig:identificatore width=60%}
+![Didascalia dell'immagine](percorso/immagine.png)
+  {#fig:identificatore width=60%}
 ```
 
 **Componenti:**
