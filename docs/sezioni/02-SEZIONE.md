@@ -24,9 +24,9 @@ a   b   c
 1   2   3
 4   5   6
 
-: Caption
+: Caption {#tbl:label}
 
-Nella Tabella @tbl:Caption vediamo i dati…
+Nella Tabella @tbl:label vediamo i dati…
 
 $$
 E = mc^2
