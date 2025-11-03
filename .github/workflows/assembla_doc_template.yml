@@ -28,7 +28,7 @@ jobs:
 
     - name: Install latest Pandoc via official .deb
       run: |
-        PANDOC_VERSION=3.7.0.2
+        PANDOC_VERSION=3.8.2.1
         wget https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb
         apt-get update
         apt-get install -y ./pandoc-${PANDOC_VERSION}-1-amd64.deb
@@ -51,9 +51,6 @@ jobs:
       run: |
         FONT=$(python3 .github/scripts/get_font.py)
         echo "FONT=$FONT" >> $GITHUB_ENV
-
-    - name: Show FONT
-      run: echo "FONT=$FONT"
 
     - name: Install Microsoft Core Fonts (including Arial)
       if: env.FONT == 'arial'
