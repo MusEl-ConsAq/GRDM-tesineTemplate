@@ -97,7 +97,6 @@ jobs:
           --template=styles/templatePandoc.latex \
           --filter pandoc-crossref \
           --lua-filter=lua-filters/multibib.lua \
-          -V use_listings=true \
           -o "$PDF_NAME"
         echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
         mkdir -p pages_artifact
