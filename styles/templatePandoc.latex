@@ -52,6 +52,10 @@ $if(verbatim-in-note)$
 $endif$
 \usepackage{xcolor}
 
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
 \usepackage{fvextra}
 \fvset{breaklines=true, breakanywhere=true,
        fontsize=\small,
@@ -60,9 +64,6 @@ $endif$
        bgcolor=\color{gray!5},
        xleftmargin=1.5cm,
        xrightmargin=0.5cm}
-$if(highlighting-macros)$
-$highlighting-macros$
-$endif$
 
 
 
