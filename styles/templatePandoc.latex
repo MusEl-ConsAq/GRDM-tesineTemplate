@@ -50,21 +50,24 @@ $endif$
 $if(verbatim-in-note)$
 \usepackage{fancyvrb}
 $endif$
+
 \usepackage{xcolor}
+\definecolor{gray5}{gray}{0.95}
 
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
 
 \usepackage{fvextra}
-\fvset{breaklines=true, breakanywhere=true,
-       fontsize=\small,
-       frame=single,
-       framesep=6pt,
-       bgcolor=\color{gray!5},
-       xleftmargin=1.5cm,
-       xrightmargin=0.5cm}
-
+\fvset{
+  breaklines=true,
+  breakanywhere=true,
+  fontsize=\small,
+  frame=single,
+  framesep=6pt,
+  bgcolor=\color{gray5},
+  xleftmargin=1.5cm,
+  xrightmargin=0.5cm}
 
 
 $if(tables)$
