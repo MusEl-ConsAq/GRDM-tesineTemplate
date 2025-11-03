@@ -26,7 +26,7 @@ jobs:
         # Installa dipendenze base
         apt-get install -y git python3-pip fonts-liberation wget
         pip install pyyaml
-        tlmgr install framed
+        tlmgr install framed fvextra
         
         # Download in parallelo (background jobs)
         PANDOC_VERSION=3.8.2
