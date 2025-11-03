@@ -96,12 +96,12 @@ a       b       c
 : Descrizione della tabella {#tbl:identificatore}
 
 
-**Componenti essenziali:**
-- **Riga delle intestazioni:** `a  b  c` (separati da spazi o tab)
-- **Riga di separazione:** `---  ---  ---` (indica dove iniziano i dati)
-- **Righe di dati:** valori separati da spazi multipli
-- **Didascalia:** `: Testo della didascalia`
-- **Identificatore:** `{#tbl:nome}` (per i riferimenti incrociati)
+**Componenti essenziali:**    
+- **Riga delle intestazioni:** `a  b  c` (separati da spazi o tab)    
+- **Riga di separazione:** `---  ---  ---` (indica dove iniziano i dati)    
+- **Righe di dati:** valori separati da spazi multipli    
+- **Didascalia:** `: Testo della didascalia`    
+- **Identificatore:** `{#tbl:nome}` (per i riferimenti incrociati)    
 
 ## 2.2 Riferimento alla tabella
 
