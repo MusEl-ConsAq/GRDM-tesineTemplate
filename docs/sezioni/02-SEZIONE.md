@@ -14,6 +14,14 @@ Come sottolinea Del Duca [@delduca1987, p.17]:
 > questa è una citazione
 
 
+\begin{wrapfigure}{r}{0.4\textwidth}
+  \centering
+  \includegraphics[width=0.38\textwidth]{docs/images/img001.png}
+  \caption{Diagramma esplicativo}{#fig:diagramma}
+\end{wrapfigure}
+
+Questo paragrafo spiega il diagramma. Puoi continuare a scrivere testo qui, ed esso scorrerà automaticamente a sinistra dell’immagine.
+
 ![Una bella figura](docs/images/img001.png){#fig:bellissima width=60%}
 
 Come si vede in @fig:bellissima, il risultato è…
