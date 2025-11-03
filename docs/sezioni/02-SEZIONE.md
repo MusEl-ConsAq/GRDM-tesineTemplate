@@ -60,7 +60,7 @@ Pandoc supporta la creazione di tabelle con riferimenti incrociati. È fondament
 
 ### 2.1 Sintassi base
 
-
+```csound
 a       b       c
 ---     ---     ---
 1       2       3
@@ -68,7 +68,7 @@ a       b       c
 7       8       9
 
 : Descrizione della tabella {#tbl:identificatore}
-
+```
 
 **Componenti essenziali:**
 - **Riga delle intestazioni:** `a  b  c` (separati da spazi o tab)
@@ -89,7 +89,7 @@ Come si vede nella Tabella @tbl:identificatore, i risultati mostrano...
 
 ### 2.3 Esempio completo
 
-
+```csound
 Parametro       Valore      Unità
 -----------     -------     ------
 Frequenza       440         Hz
@@ -97,6 +97,7 @@ Durata          2.5         s
 Ampiezza        0.8         dB
 
 : Parametri dell'oscillatore {#tbl:parametri}
+```
 
 La Tabella @tbl:parametri mostra le impostazioni utilizzate nell'esperimento.
 
@@ -228,12 +229,14 @@ permette di ottenere trasformazioni sonore complesse...
 
 ### 4.3 Confronto: Pandoc vs Wrapfigure
 
+```csound
 | Caratteristica | Pandoc `![...]` | Wrapfigure |
 |----------------|-----------------|------------|
 | **Semplicità** | ✓ Molto semplice | ✗ Richiede LaTeX |
 | **Riferimenti** | ✓ `@fig:nome` | ✗ `\ref{fig:nome}` |
 | **Posizionamento** | Centro pagina | Testo attorno |
 | **Quando usare** | Maggior parte dei casi | Solo se necessario |
+```
 
 **Raccomandazione:** Usa la sintassi Pandoc (`![...]`) come default. Ricorri a `wrapfigure` solo quando hai davvero bisogno che il testo scorra attorno all'immagine.
 
@@ -249,6 +252,7 @@ permette di ottenere trasformazioni sonore complesse...
 
 ### Tabelle
 
+```csound
 col1    col2    col3
 ---     ---     ---
 a       b       c
@@ -256,6 +260,7 @@ a       b       c
 : Didascalia {#tbl:nome}
 
 Riferimento: `@tbl:nome`
+```
 
 ### Equazioni
 
@@ -302,11 +307,13 @@ La sintesi granulare, introdotta da Curtis Roads [@dannenberg2003], si basa sull
 
 La Figura @fig:grano illustra la struttura temporale di un singolo grano. I parametri fondamentali sono riassunti nella Tabella @tbl:param_grano.
 
+```csound
 Parametro       Range           Descrizione
 -----------     -----------     --------------------------
 Durata          5-100 ms        Lunghezza del grano
 Inviluppo       Gaussiano       Forma della finestra
 Densità         10-1000 Hz      Frequenza di emissione
+```
 
 : Parametri della sintesi granulare {#tbl:param_grano}
 
