@@ -17,8 +17,9 @@ Come sottolinea Del Duca [@delduca1987, p.17]:
 \begin{wrapfigure}{r}{0.4\textwidth}
   \centering
   \includegraphics[width=0.38\textwidth]{docs/images/img001.png}
-  \caption{Diagramma esplicativo}{#fig:diagramma}
-\end{wrapfigure}
+  \caption{Diagramma esplicativo} % <-- qui non mettere #fig:…
+  \label{fig:diagramma} 
+  \end{wrapfigure}
 
 Questo paragrafo spiega il diagramma. Puoi continuare a scrivere testo qui, ed esso scorrerà automaticamente a sinistra dell’immagine.
 
