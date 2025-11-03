@@ -52,6 +52,14 @@ $if(verbatim-in-note)$
 $endif$
 \usepackage{xcolor}
 
+\usepackage{fvextra}
+\fvset{breaklines=true, breakanywhere=true,
+       fontsize=\small,
+       frame=single,
+       framesep=6pt,
+       bgcolor=\color{gray!5},
+       xleftmargin=1.5cm,
+       xrightmargin=0.5cm}
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
