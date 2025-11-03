@@ -178,11 +178,17 @@ Esistono due metodi principali per inserire immagini: la sintassi Pandoc (più s
 ```
 
 **Componenti:**
+
 - `!` indica che è un'immagine
+
 - `[Didascalia]` testo che apparirà sotto la figura
+  
 - `(percorso)` path relativo al file (es. `docs/images/img001.png`)
+  
 - `{#fig:nome}` identificatore per riferimenti incrociati
+  
 - `width=XX%` larghezza in percentuale della pagina
+  
 
 **Esempio:**
 
