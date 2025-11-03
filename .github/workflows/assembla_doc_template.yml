@@ -83,6 +83,7 @@ jobs:
         pandoc README.md \
           --pdf-engine=xelatex \
           --template=styles/templatePandoc.latex \
+          --listings \
           --filter pandoc-crossref \
           --lua-filter=lua-filters/multibib.lua \
           -o "$PDF_NAME"
