@@ -2,7 +2,7 @@ name: Build Tesina PDF
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, ToUbuntu ]
     paths:
       - '**/**'
 
@@ -15,27 +15,63 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/kjarosh/latex:2025.1-small
+      image: ghcr.io/dmgiulioromano/latex-docker-ubuntu:2025.1-small
 
     steps:
     - name: Install dependencies
       run: |
-        apk add --no-cache git bash tar python3 py3-pip pandoc
-        pip install --break-system-packages pyyaml
+        apt-get update
+        apt-get install -y git python3-pip pandoc fonts-liberation
+        fc-cache -f -v
+        pip install pyyaml
+        fc-list | grep -i "Liberation Sans"
 
-    - name: Install Microsoft Core Fonts (including Arial)
+    - name: Install latest Pandoc via official .deb
       run: |
-        apk add --no-cache msttcorefonts-installer fontconfig
-        update-ms-fonts
-        fc-cache -f
+        PANDOC_VERSION=3.8.2.1
+        wget https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb
+        apt-get update
+        apt-get install -y ./pandoc-${PANDOC_VERSION}-1-amd64.deb
+        rm pandoc-${PANDOC_VERSION}-1-amd64.deb
+        pandoc --version
+
+    - name: Install pandoc-crossref
+      run: |
+        PANDOC_XREF_VERSION=0.3.22
+        wget https://github.com/lierdakil/pandoc-crossref/releases/download/v${PANDOC_XREF_VERSION}/pandoc-crossref-Linux-X64.tar.xz
+        tar -xJf pandoc-crossref-Linux-X64.tar.xz
+        mv pandoc-crossref /usr/local/bin/
+        pandoc-crossref --version
 
     - name: Checkout repository
       uses: actions/checkout@v4
+
+    - name: Read font from config.yaml
+      id: read_font
+      run: |
+        FONT=$(python3 .github/scripts/get_font.py)
+        echo "FONT=$FONT" >> $GITHUB_ENV
+
+    - name: Install Microsoft Core Fonts (including Arial)
+      if: env.FONT == 'arial'
+      run: |
+        apt-get update
+        # Accetta automaticamente la licenza EULA dei Microsoft fonts
+        echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
+        apt-get install -y ttf-mscorefonts-installer fontconfig
+        # Aggiorna la cache dei font per renderli disponibili subito
+        fc-cache -f
 
     - name: Extract metadata & concatenate markdown
       run: |
         rm -f README.md *.pdf        
         python3 .github/scripts/build-tesina.py
+
+    - name: Generate config_fonts.tex
+      id: generate_font
+      run: |
+        # Esegui lo script Python che legge config.yaml e genera config_fonts.tex
+        python3 .github/scripts/tmpTeXFont.py
 
     - name: Build PDF with Pandoc
       run: |
@@ -47,14 +83,16 @@ jobs:
         pandoc README.md \
           --pdf-engine=xelatex \
           --template=styles/templatePandoc.latex \
+          --filter pandoc-crossref \
           --lua-filter=lua-filters/multibib.lua \
           -o "$PDF_NAME"
         echo "PDF_NAME=$PDF_NAME" >> $GITHUB_ENV
         mkdir -p pages_artifact
         cp "${PDF_NAME}" pages_artifact/latest.pdf
+
     - uses: actions/upload-artifact@v4
       with:
-        name: progetto-completo_pdf
+        name: "${{ env.PDF_NAME }}"
         path: "${{ env.PDF_NAME }}"
         overwrite: true
  
@@ -79,7 +117,7 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
+        branch: ${{ github.ref_name }}
         
   deploy:
     needs: build
