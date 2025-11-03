@@ -163,8 +163,9 @@ Esistono due metodi principali per inserire immagini: la sintassi Pandoc (più s
 
 **Sintassi:**
 
+```Markdown
 ![Didascalia dell'immagine](percorso/immagine.png){#fig:identificatore width=60%}
-
+```
 
 **Componenti:**
 - `!` indica che è un'immagine
@@ -175,7 +176,7 @@ Esistono due metodi principali per inserire immagini: la sintassi Pandoc (più s
 
 **Esempio:**
 
-![Spettrogramma del segnale analizzato](docs/images/spettro.png){#fig:spettro width=70%}
+![Spettrogramma del segnale analizzato](docs/images/img001.png){#fig:spettro width=70%}
 
 La Figura @fig:spettro mostra la distribuzione delle frequenze nel tempo.
 
@@ -266,7 +267,7 @@ Riferimento: `@eq:nome`
 
 ### Figure
 
-![Didascalia](path/img.png){#fig:nome width=60%}
+![Didascalia](docs/images/img001.png){#fig:nome width=60%}
 
 Riferimento: @fig:nome
 
