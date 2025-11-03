@@ -51,7 +51,7 @@ Come sottolinea Del Duca [@delduca1987, p.17]:
 Questo paragrafo spiega il diagramma. Puoi continuare a scrivere testo qui, ed esso scorrerà automaticamente a sinistra dell’immagine.
 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
-Occhio perché bisogna trovare un modo per andare a capo con l'immagine della wrapfigure... sennò crea problemi... non è automatico.
+Occhio perché bisogna trovare un modo per andare a capo con l'immagine della wrapfigure... sennò crea problemi... non è automatico. provo se con wrapfig posso comunqneu parlare di @fig:diagramma
 
 Come si vede in @fig:bellissima, il risultato è…
 
