@@ -40,7 +40,7 @@ Le citazioni si basano sui file `.bib` presenti nella cartella `docs/` (bibliogr
 Per citare un'opera in modo generico:
 
 
-La sintesi digitale è stata ampiamente studiata [@delduca1987].
+La sintesi digitale è stata ampiamente studiata `[@delduca1987]`.
 
 
 **Risultato:** La sintesi digitale è stata ampiamente studiata (Del Duca 1987).
@@ -87,7 +87,6 @@ Pandoc supporta la creazione di tabelle con riferimenti incrociati. È fondament
 
 ### 2.1 Sintassi base
 
-```csound
 a       b       c
 ---     ---     ---
 1       2       3
@@ -95,7 +94,7 @@ a       b       c
 7       8       9
 
 : Descrizione della tabella {#tbl:identificatore}
-```
+
 
 **Componenti essenziali:**
 - **Riga delle intestazioni:** `a  b  c` (separati da spazi o tab)
