@@ -132,11 +132,11 @@ $$ {#eq:identificatore}
 
 ## 3.2 Riferimento all'equazione
 
-
+```text
 L'Equazione @eq:identificatore mostra la relazione energia-massa...
+```
 
-
-**Risultato:** L'Equazione (1) mostra la relazione energia-massa...
+**Risultato:** @eq:identificatore mostra la relazione energia-massa...
 
 ## 3.3 Esempi comuni
 
