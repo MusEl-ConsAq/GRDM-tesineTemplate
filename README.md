@@ -233,25 +233,33 @@ La Figura @fig:spettro mostra la distribuzione delle frequenze nel tempo.
 
 Per far scorrere il testo attorno a un'immagine, usa l'ambiente LaTeX `wrapfigure`:
 
-```latex
+
 \begin{wrapfigure}{r}{0.4\textwidth}
   \centering
   \includegraphics[width=0.38\textwidth]{docs/images/img001.png}
   \caption{Diagramma esplicativo}
   \label{fig:diagramma}
 \end{wrapfigure}
-```
+
 
 **Parametri:**
+
 - `{r}` posizione: `r` (destra) o `l` (sinistra)
+  
 - `{0.4\textwidth}` larghezza dello spazio riservato all'immagine
+  
 - `[width=0.38\textwidth]` larghezza effettiva dell'immagine (leggermente inferiore)
+  
 - `\label{fig:nome}` identificatore LaTeX (NON usare `#fig:`)
 
-**ATTENZIONE:** 
+**ATTENZIONE:**
+
 - Con wrapfigure devi inserire **immediatamente dopo** un paragrafo di testo sufficientemente lungo
+  
 - Non funziona bene con elenchi puntati o altri elementi speciali
+  
 - Il riferimento si fa con `\ref{fig:nome}` in LaTeX, NON con `@fig:nome`
+  
 
 **Esempio d'uso corretto:**
 ```latex
