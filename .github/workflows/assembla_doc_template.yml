@@ -2,7 +2,7 @@ name: Build Tesina PDF
 
 on:
   push:
-    branches: [ main, ToUbuntu ]
+    branches: [ main ]
     paths:
       - '**/**'
 
@@ -26,6 +26,7 @@ jobs:
         # Installa dipendenze base
         apt-get install -y git python3-pip fonts-liberation wget
         pip install pyyaml
+        tlmgr update --self
         tlmgr install framed fvextra
         
         # Download in parallelo (background jobs)
