@@ -1,12 +1,6 @@
 ---
 abstract: |
   questo dovrebbe essere il sommario...
-bibliography:
-  bib: docs/bibliografia.bib
-  dis: docs/discografia.bib
-  sit: docs/sitografia.bib
-csl: styles/consAq-author-date.csl
-nocite: "@*"
 ---
 
 # INTRODUZIONE!!!
