@@ -96,7 +96,9 @@ jobs:
         PDF_NAME="${SAFE_TITLE}-CONSAQ-${TIMESTAMP}.pdf"
         pandoc README.md \
           --pdf-engine=xelatex \
-          --template=styles/templatePandoc.latex \
+          --metadata-file=metadata.yaml \
+          --metadata-file=bibliography.yaml \
+          --template=styles/template.latex \
           --syntax-highlighting=tango \
           --filter pandoc-crossref \
           --lua-filter=lua-filters/multibib.lua \
