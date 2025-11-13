@@ -98,16 +98,6 @@ def main():
         out.write("abstract: |\n")
         for line in abstract_content.split('\n'):
             out.write(f"  {line}\n")
-        if found_bib_files:
-            out.write("bibliography:\n")
-            for key, path in sorted(found_bib_files.items()):
-                out.write(f"  {key}: {path}\n")
-        else:
-            print("[WARN] No bibliography files found. 'bibliography' field will not be added to frontmatter.")
-
-        out.write("csl: styles/consAq-author-date.csl\n")
-        out.write(r'nocite: "@*"' + "\n")
-
         out.write("---\n\n")
         
         # --- Concatena i file markdown delle sezioni ---
