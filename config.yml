@@ -1,18 +1,2 @@
-# Mettiamo tutto sotto una chiave principale 'tesina'
-tesina:
-  titolo: "Il Suono e la Forma"
-  sottotitolo: "Un'analisi della sintesi granulare"
-  autore: "Mario Rossi" # Usiamo 'autore' invece di 'candidato.nome' per coerenza con Pandoc
-  
-  # Dati per il conservatorio
-  conservatorio: "Conservatorio A. Casella"
-  citta: "L'Aquila"
-  corso: "Musica Elettronica DCPL34"
-
-  # Dati specifici dell'esame
-  esame: "Sintesi e Campionamento"
-  data: "15/07/2025"
-
-  
 environment:
   font: #arial
