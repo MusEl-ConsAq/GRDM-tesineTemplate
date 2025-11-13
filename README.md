@@ -1,19 +1,6 @@
 ---
-title: "Il Suono e la Forma"
-subtitle: "Un'analisi della sintesi granulare"
-author: "Mario Rossi"
-date: "15/07/2025"
-conservatorio: "Conservatorio A. Casella, L'Aquila"
-corso: "Musica Elettronica DCPL34"
-esame: "Sintesi e Campionamento"
 abstract: |
   questo dovrebbe essere il sommario...
-header-includes:
-  - \usepackage{styles/tesina}
-documentclass: article
-fontsize: 12pt
-toc: true
-toc-depth: 2
 bibliography:
   bib: docs/bibliografia.bib
   dis: docs/discografia.bib
