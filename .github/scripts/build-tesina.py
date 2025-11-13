@@ -77,6 +77,17 @@ def main():
         else:
              print(f"    [OK] Found: {file_path.name} -> Mapped to key '{final_key}'")
 
+    if found_bib_files:
+        with open("bibliography.yaml", "w", encoding='utf-8') as bib_file:
+            bib_file.write("---\n")
+            bib_file.write("bibliography:\n")
+            for key, path in sorted(found_bib_files.items()):
+                bib_file.write(f"  {key}: {path}\n")
+            bib_file.write("---\n")
+    else:
+        print("[WARN] No bibliography files found. Skipping bibliography.yaml.")
+
+    
     # ==========================================
     # 4. CREA README.MD CON FRONTMATTER E CONTENUTI
     # ==========================================
